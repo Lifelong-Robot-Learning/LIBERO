@@ -7,7 +7,7 @@
 [[Paper]](https://arxiv.org/pdf/2306.03310.pdf)
 [[Docs]]()
 ______________________________________________________________________
-<img src="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/images/fig1.png" width="780">
+![](images/libero_main.gif)
 </div>
 
 **LIBERO** is designed for studying knowledge transfer in multitask and lifelong robot learning problems. Successfully resolving these problems require both declarative knowledge about objects/spatial relationships and procedural knowledge about motion/behaviors. **LIBERO** provides:
