@@ -11,7 +11,7 @@ ______________________________________________________________________
 </div>
 
 **LIBERO** is designed for studying knowledge transfer in multitask and lifelong robot learning problems. Successfully resolving these problems require both declarative knowledge about objects/spatial relationships and procedural knowledge about motion/behaviors. **LIBERO** provides:
-- A procedural generation pipeline that could in principle generate an infinite number of manipulation tasks.
+- a procedural generation pipeline that could in principle generate an infinite number of manipulation tasks.
 - 130 tasks grouped into four task suites: **LIBERO-Spatial**, **LIBERO-Object**, **LIBERO-Goal**, and **LIBERO-100**. The first three task suites have controlled distribution shifts, meaning that they require the transfer of a specific type of knowledge. In contrast, **LIBERO-100** consists of 100 manipulation tasks that require the transfer of entangled knowledge. **LIBERO-100** is further splitted into **LIBERO-90** for pretraining a policy and **LIBERO-10** for testing the agent's downstream lifelong learning performance.
 - five research topics (**bottom** of the above figure).
 - three visuomotor policy network architectures.
