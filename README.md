@@ -1,16 +1,14 @@
-# LIBERO: Benchmarking Knowledge Transfer in Lifelong Robot Learning
-
 <div align="center">
+<img src="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/images/libero_logo.png" width="360">
+
+**Benchmarking Knowledge Transfer for Lifelong Robot Learning**
 
 [[Website]](https://libero-project.github.io)
-[[Paper]]()
+[[Paper]](https://arxiv.org/pdf/2306.03310.pdf)
 [[Docs]]()
-
+______________________________________________________________________
+<img src="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/images/fig1.png" width="780">
 </div>
-
-<p align="center"> 
-    <img src="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/main/misc/fig1.png" width="800">
-</p>
 
 **LIBERO** is designed for studying knowledge transfer in multitask and lifelong robot learning problems. Successfully resolving these problems require both declarative knowledge about objects/spatial relationships and procedural knowledge about motion/behaviors. **LIBERO** provides:
 - A procedural generation pipeline that could in principle generate an infinite number of manipulation tasks.
@@ -25,11 +23,11 @@
 # Contents
 
 - [Installation](#Installation)
-- [Dataset](#Dataset)
+- [Datasets](#Dataset)
 - [Getting Started](#Getting-Started)
-  - [Retrieve Task](##Retrieve-Task)
-  - [Training](##Training)
-  - [Evaluation](##Evaluation)
+  - [Retrieve Task](#Retrieve-Task)
+  - [Training](#Training)
+  - [Evaluation](#Evaluation)
 - [Citation](#Citation)
 - [License](#License)
 
@@ -149,8 +147,7 @@ If you find **LIBERO** to be useful in your own research, please consider citing
 ```
 
 # License
-
-| Component | License                                                                                                              |
-|-----------|----------------------------------------------------------------------------------------------------------------------|
-| Codebase  | [MIT License](LICENSE)                                                                                               |
-| Dataset   | [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)  |
+| Component        | License                                                                                                                             |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| Codebase         | [MIT License](LICENSE)                                                                                                                      |
+| Datasets         | [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)                 |
