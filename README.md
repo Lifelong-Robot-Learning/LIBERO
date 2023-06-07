@@ -1,0 +1,156 @@
+# LIBERO: Benchmarking Knowledge Transfer in Lifelong Robot Learning
+
+<div align="center">
+
+[[Website]](https://libero-project.github.io)
+[[Paper]]()
+[[Docs]]()
+
+</div>
+
+<p align="center"> 
+    <img src="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/main/misc/fig1.png" width="800">
+</p>
+
+**LIBERO** is designed for studying knowledge transfer in multitask and lifelong robot learning problems. Successfully resolving these problems require both declarative knowledge about objects/spatial relationships and procedural knowledge about motion/behaviors. **LIBERO** provides:
+- A procedural generation pipeline that could in principle generate an infinite number of manipulation tasks.
+- 130 tasks grouped into four task suites: **LIBERO-Spatial**, **LIBERO-Object**, **LIBERO-Goal**, and **LIBERO-100**. The first three task suites have controlled distribution shifts, meaning that they require the transfer of a specific type of knowledge. In contrast, **LIBERO-100** consists of 100 manipulation tasks that require the transfer of entangled knowledge. **LIBERO-100** is further splitted into **LIBERO-90** for pretraining a policy and **LIBERO-10** for testing the agent's downstream lifelong learning performance.
+- five research topics (**bottom** of the above figure).
+- three visuomotor policy network architectures.
+- three lifelong learning algorithms with the sequential finetuning and multitask learning baselines.
+
+---
+
+
+# Contents
+
+- [Installation](#Installation)
+- [Dataset](#Dataset)
+- [Getting Started](#Getting-Started)
+  - [Retrieve Task](##Retrieve-Task)
+  - [Training](##Training)
+  - [Evaluation](##Evaluation)
+- [Citation](#Citation)
+- [License](#License)
+
+
+# Installtion
+Please run the following commands in the given order to install the dependency for **LIBERO**.
+```
+conda create -n libero python=3.8.13
+pip install -r requirements.txt
+pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+```
+
+Then install the `libero` package:
+```
+git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+cd LIBERO
+pip install -e .
+```
+
+# Datasets
+We provide high-quality human teleoperation demonstrations for the four task suites in **LIBERO**. To download the demonstration dataset, run:
+```python
+python benchmark_scripts/download_libero_datasets.py
+```
+By default, the dataset will be stored under the ```LIBERO``` folder and all four datasets will be downloaded. To download a specific dataset, use
+```python
+python benchmark_scripts/download_libero_datasets.py --datasets DATASET
+```
+where ```DATASET``` is chosen from `[libero_spatial, libero_object, libero_object, libero_goal`.
+
+
+# Getting Started
+
+## Retrieve Task
+
+The following is a minimal example of retrieving a specific task from a specific task suite.
+```python
+from libero.libero import benchmark
+from libero.libero.envs import OffScreenRenderEnv
+
+
+benchmark_dict = benchmark.get_benchmark_dict()
+task_suite_name = "libero_10" # can also choose libero_spatial, libero_object, etc.
+task_suite = benchmark_dict[task_suite_name]()
+
+# retrieve a specific task
+task_id = 0
+task = task_suite.get_task[task_id]
+task_name = task.name
+task_description = task.language
+task_bddl_file = os.path.join(get_libero_path("bddl_files"), task.problem_folder, task.bddl_file)
+print(f"[info] retrieving task {task_id} from suite {task_suite_name}, the " + \
+      f"language instruction is {task_description}, and the bddl file is {task_bddl_file}")
+
+# step over the environment
+env_args = {
+    "bddl_file_name": task_bddl_file,
+    "camera_heights": 128,
+    "camera_widths": 128
+}
+env = OffScreenRenderEnv(**env_args)
+env.seed(0)
+env.reset()
+init_states = task_suite.get_task_init_states(task_id) # for benchmarking purpose, we fix the a set of initial states
+init_state_id = 0
+env.set_init_state(init_states[init_state_id])
+
+dummy_action = [0.] * 7
+for step in range(10):
+    obs, reward, done, info = env.step(dymmy_action)
+env.close()
+```
+Currently, we only support sparse reward function (i.e., the agent receives `+1` when the task is finished). As sparse-reward RL is extremely hard to learn, currently we mainly focus on lifelong imitation learning.
+
+## Training
+To start a lifelong learning experiment, please choose:
+- `BENCHMARK` from `[LIBERO_SPATIAL, LIBERO_OBJECT, LIBERO_GOAL, LIBERO_90, LIBERO_10]`
+- `POLICY` from `[bc_rnn_policy, bc_transformer_policy, bc_vilt_policy]`
+- `ALGO` from `[base, er, ewc, packnet, multitask]`
+
+then run the following:
+
+```shell
+export CUDA_VISIBLE_DEVICES=GPU_ID && \
+export MUJOCO_EGL_DEVICE_ID=GPU_ID && \
+python libero/lifelong/main.py seed=SEED \
+                               benchmark_name=BENCHMARK 
+                               policy=POLICY \
+                               lifelong=ALGO
+```
+Please see the documentation for the details of reproducing the study results.
+
+## Evaluation
+
+By default the policies will be evaluated on the fly during training. If you have limited computing resource of GPUs, we offer an evaluation script for you to evaluate models separately.
+
+```shell
+python libero/lifelong/evaluate.py --benchmark BENCHMARK_NAME \
+                                   --task_id TASK_ID \ 
+                                   --algo ALGO_NAME \
+                                   --policy POLICY_NAME \
+                                   --seed SEED
+```
+
+# Citation
+If you find **LIBERO** to be useful in your own research, please consider citing our paper:
+
+```bibtex
+@misc{liu2023libero,
+      title={LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning}, 
+      author={Bo Liu and Yifeng Zhu and Chongkai Gao and Yihao Feng and Qiang Liu and Yuke Zhu and Peter Stone},
+      year={2023},
+      eprint={2306.03310},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI}
+}
+```
+
+# License
+
+| Component | License                                                                                                              |
+|-----------|----------------------------------------------------------------------------------------------------------------------|
+| Codebase  | [MIT License](LICENSE)                                                                                               |
+| Dataset   | [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)  |
