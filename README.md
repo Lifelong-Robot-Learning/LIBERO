@@ -25,7 +25,7 @@ ______________________________________________________________________
 - [Installation](#Installation)
 - [Datasets](#Dataset)
 - [Getting Started](#Getting-Started)
-  - [Retrieve Task](#Retrieve-Task)
+  - [Task](#Task)
   - [Training](#Training)
   - [Evaluation](#Evaluation)
 - [Citation](#Citation)
@@ -61,7 +61,9 @@ where ```DATASET``` is chosen from `[libero_spatial, libero_object, libero_objec
 
 # Getting Started
 
-## Retrieve Task
+For a detailed walk-through, please either refer to the documentation or the notebook examples provided under the `notebooks` folder. In the following, we provide example scripts for retrieving a task, training and evaluation.
+
+## Task
 
 The following is a minimal example of retrieving a specific task from a specific task suite.
 ```python
