@@ -6,7 +6,7 @@ In this section, we describe how to generate a task in LIBERO. The procedure con
 ## An example
 We present an example of creating a task in LIBERO for intuitive understanding. 
 
-The creation of a task given a pre-defined scene can be easily created using a function. A complete example of generating a task can be found in the provided [notebook](notebooks/procedural_creation_walkthrough.ipynb)
+The creation of a task given a pre-defined scene can be easily created using a function. A complete example of generating a task can be found in the provided [notebook](https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/notebooks/procedural_creation_walkthrough.ipynb)
 
 ### Layout and Initial State Distributions
 

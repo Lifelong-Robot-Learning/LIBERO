@@ -28,13 +28,14 @@
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -411,13 +412,13 @@ title="Print to PDF"
 <h2>Prepare mesh files<a class="headerlink" href="#prepare-mesh-files" title="Permalink to this headline">#</a></h2>
 <p>While the creation of mesh files are not the main focus of this repo, this process is critical to unlock task diversity. Here is a list of resources that you might find helpful:</p>
 <ul class="simple">
-<li><p>(obj2mjcf)[https://github.com/kevinzakka/obj2mjcf]</p></li>
+<li><p><a class="reference external" href="https://github.com/kevinzakka/obj2mjcf">obj2mjcf</a></p></li>
 </ul>
 <p>You can also take a look files located under <code class="docutils literal notranslate"><span class="pre">libero/libero/assets</span></code>.</p>
 </section>
 <section id="create-a-problem-class">
 <h2>Create a problem class<a class="headerlink" href="#create-a-problem-class" title="Permalink to this headline">#</a></h2>
-<p>Problem class defines a domain. A domain is something you will define initial state distributions and task goals on top of it. All the problem definitions in the LIBERO is located in <code class="docutils literal notranslate"><span class="pre">libero/libero/envs/problems</span></code>. We also provide a <a class="reference external" href="templates/problem_class_template.py">template</a> that make it easy for users to create their own problem class.</p>
+<p>Problem class defines a domain. A domain is something you will define initial state distributions and task goals on top of it. All the problem definitions in the LIBERO is located in <code class="docutils literal notranslate"><span class="pre">libero/libero/envs/problems</span></code>. We also provide a <a class="reference external" href="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/templates/problem_class_template.py">template</a> that make it easy for users to create their own problem class.</p>
 </section>
 </section>
 

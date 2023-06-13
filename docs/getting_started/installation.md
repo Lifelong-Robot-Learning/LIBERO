@@ -14,7 +14,7 @@ pip install robosuite
 
 Lastly, install the package.
 ```
-git clone https://github.com/zhuyifengzju/libero-dev.git
+git clone git@github.com:Lifelong-Robot-Learning/LIBERO.git
 pip install -e .
 ```
 
