@@ -5,7 +5,7 @@
 
 [[Website]](https://libero-project.github.io)
 [[Paper]](https://arxiv.org/pdf/2306.03310.pdf)
-[[Docs]]()
+[[Docs]](https://lifelong-robot-learning.github.io/LIBERO/)
 ______________________________________________________________________
 ![](images/libero_main.gif)
 </div>
