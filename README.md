@@ -57,7 +57,7 @@ By default, the dataset will be stored under the ```LIBERO``` folder and all fou
 ```python
 python benchmark_scripts/download_libero_datasets.py --datasets DATASET
 ```
-where ```DATASET``` is chosen from `[libero_spatial, libero_object, libero_object, libero_goal`.
+where ```DATASET``` is chosen from `[libero_spatial, libero_object, libero_100, libero_goal`.
 
 
 # Getting Started
