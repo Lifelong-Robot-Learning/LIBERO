@@ -36,14 +36,15 @@ https://github.com/Lifelong-Robot-Learning/LIBERO/assets/8097542/cbb1522f-0831-4
 Please run the following commands in the given order to install the dependency for **LIBERO**.
 ```
 conda create -n libero python=3.8.13
+conda activate libero
+git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+cd LIBERO
 pip install -r requirements.txt
 pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 
 Then install the `libero` package:
 ```
-git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
-cd LIBERO
 pip install -e .
 ```
 
@@ -116,7 +117,7 @@ then run the following:
 export CUDA_VISIBLE_DEVICES=GPU_ID && \
 export MUJOCO_EGL_DEVICE_ID=GPU_ID && \
 python libero/lifelong/main.py seed=SEED \
-                               benchmark_name=BENCHMARK 
+                               benchmark_name=BENCHMARK \
                                policy=POLICY \
                                lifelong=ALGO
 ```
@@ -131,7 +132,10 @@ python libero/lifelong/evaluate.py --benchmark BENCHMARK_NAME \
                                    --task_id TASK_ID \ 
                                    --algo ALGO_NAME \
                                    --policy POLICY_NAME \
-                                   --seed SEED
+                                   --seed SEED \
+                                   --ep EPOCH \
+                                   --load_task LOAD_TASK \
+                                   --device_id CUDA_ID
 ```
 
 # Citation

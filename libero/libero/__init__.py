@@ -8,8 +8,11 @@ libero_config_path = os.environ.get(
 config_file = os.path.join(libero_config_path, "config.yaml")
 
 
-def get_default_path_dict():
-    benchmark_root_path = os.path.dirname(os.path.abspath(__file__))
+def get_default_path_dict(custom_location=None):
+    if custom_location is None:
+        benchmark_root_path = os.path.dirname(os.path.abspath(__file__))
+    else:
+        benchmark_root_path = custom_location
 
     # This is a default path for localizing all the default bddl files
     bddl_files_default_path = os.path.join(benchmark_root_path, "./bddl_files")

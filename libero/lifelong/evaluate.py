@@ -167,7 +167,7 @@ def main():
     if cfg.lifelong.algo == "PackNet":
         algo.eval()
         for module_idx, module in enumerate(algo.policy.modules()):
-            if isinstance(module, nn.Conv2d) or isinstance(module, nn.Linear):
+            if isinstance(module, torch.nn.Conv2d) or isinstance(module, torch.nn.Linear):
                 weight = module.weight.data
                 mask = algo.previous_masks[module_idx].to(cfg.device)
                 weight[mask.eq(0)] = 0.0
