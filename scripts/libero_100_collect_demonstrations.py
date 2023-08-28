@@ -24,8 +24,8 @@ from robosuite.wrappers import DataCollectionWrapper, VisualizationWrapper
 from robosuite.utils.input_utils import input2action
 
 
-import chiliocosm.envs.bddl_utils as BDDLUtils
-from chiliocosm.envs import *
+import libero.libero.envs.bddl_utils as BDDLUtils
+from libero.libero.envs import *
 from termcolor import colored
 
 
@@ -214,8 +214,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--robots",
         nargs="+",
-        type=str,
-        default="Panda",
+        type=list,
+        default=["Panda"],
         help="Which robot(s) to use in the env",
     )
     parser.add_argument(
@@ -269,17 +269,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    with open("task_mapping.json") as f:
-        task_mapping = json.load(f)
-
-    # Remove in the future
-    with open("convert_task_mapping.json") as f:
-        convert_task_mapping = json.load(f)
-
-    args.bddl_file = convert_task_mapping[
-        task_mapping[str(args.task_id)].replace("libero_100", "previous_libero_100")
-    ]
-
     # Get controller config
     controller_config = load_controller_config(default_controller=args.controller)
 
@@ -298,7 +287,9 @@ if __name__ == "__main__":
     domain_name = problem_info["domain_name"]
     language_instruction = problem_info["language_instruction"]
     text = colored(language_instruction, "red", attrs=["bold"])
-    print(text)
+    print("Goal of the following task: ", text)
+    instruction = colored("Hit any key to proceed to data collection ...", "green", attrs=["reverse", "blink"])
+    print(instruction)
     input()
 
     if "TwoArm" in problem_name:
