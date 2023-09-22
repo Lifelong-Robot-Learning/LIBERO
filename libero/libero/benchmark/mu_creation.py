@@ -1,10 +1,10 @@
 import re
-from chiliocosm.envs import objects
-from chiliocosm.utils.bddl_generation_utils import *
-from chiliocosm.envs.objects import OBJECTS_DICT
-from chiliocosm.utils.object_utils import get_affordance_regions
+from libero.libero.envs import objects
+from libero.libero.utils.bddl_generation_utils import *
+from libero.libero.envs.objects import OBJECTS_DICT
+from libero.libero.utils.object_utils import get_affordance_regions
 
-from libero.libero.mu_utils import register_mu, InitialSceneTemplates
+from libero.libero.utils.mu_utils import register_mu, InitialSceneTemplates
 
 
 @register_mu(scene_type="kitchen")
