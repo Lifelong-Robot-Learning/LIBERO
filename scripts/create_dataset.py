@@ -9,13 +9,13 @@ import robosuite.utils.transform_utils as T
 import robosuite.macros as macros
 
 import init_path
-import chiliocosm.utils.utils as chiliocosm_utils
+import libero.libero.utils.utils as libero_utils
 import cv2
 from PIL import Image
 from robosuite.utils import camera_utils
 
 from libero.libero.envs import *
-
+from libero.libero import get_libero_path
 
 def main():
     parser = argparse.ArgumentParser()
@@ -65,16 +65,12 @@ def main():
     bddl_file_name = f["data"].attrs["bddl_file_name"]
 
     bddl_file_dir = os.path.dirname(bddl_file_name)
+    replace_bddl_prefix = "/".join(bddl_file_dir.split("bddl_files/")[:-1] + "bddl_files")
 
-    hdf5_path = bddl_file_name.replace("chiliocosm/bddl_files", "datasets").replace(
-        ".bddl", "_demo.hdf5"
-    )
+    hdf5_path = os.path.join(get_libero_path("datasets"), bddl_file_dir.split("bddl_files/")[-1].replace(".bddl", "_demo.hdf5"))
+
     output_parent_dir = Path(hdf5_path).parent
     output_parent_dir.mkdir(parents=True, exist_ok=True)
-
-    # out_parent_dir = f"datasets/{env_name}_" + language_instruction.replace(" ", "_").strip("\"\"") + f"_{args.dataset_name}"
-    # os.makedirs(out_parent_dir, exist_ok=True)
-    # hdf5_path = os.path.join(output_parent_dir, "demo.hdf5")
 
     h5py_f = h5py.File(hdf5_path, "w")
 
@@ -84,7 +80,7 @@ def main():
     grp.attrs["problem_info"] = f["data"].attrs["problem_info"]
     grp.attrs["macros_image_convention"] = macros.IMAGE_CONVENTION
 
-    chiliocosm_utils.update_env_kwargs(
+    libero_utils.update_env_kwargs(
         env_kwargs,
         bddl_file_name=bddl_file_name,
         has_renderer=not args.use_camera_obs,
@@ -140,7 +136,7 @@ def main():
             except:
                 continue
 
-        model_xml = chiliocosm_utils.postprocess_model_xml(model_xml, {})
+        model_xml = libero_utils.postprocess_model_xml(model_xml, {})
 
         if not args.use_camera_obs:
             env.viewer.set_camera(0)
