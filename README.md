@@ -142,13 +142,11 @@ python libero/lifelong/evaluate.py --benchmark BENCHMARK_NAME \
 If you find **LIBERO** to be useful in your own research, please consider citing our paper:
 
 ```bibtex
-@misc{liu2023libero,
-      title={LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning}, 
-      author={Bo Liu and Yifeng Zhu and Chongkai Gao and Yihao Feng and Qiang Liu and Yuke Zhu and Peter Stone},
-      year={2023},
-      eprint={2306.03310},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI}
+@article{liu2023libero,
+  title={LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning},
+  author={Liu, Bo and Zhu, Yifeng and Gao, Chongkai and Feng, Yihao and Liu, Qiang and Zhu, Yuke and Stone, Peter},
+  journal={arXiv preprint arXiv:2306.03310},
+  year={2023}
 }
 ```
 
