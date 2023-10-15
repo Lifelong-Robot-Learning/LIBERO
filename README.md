@@ -100,7 +100,7 @@ env.set_init_state(init_states[init_state_id])
 
 dummy_action = [0.] * 7
 for step in range(10):
-    obs, reward, done, info = env.step(dymmy_action)
+    obs, reward, done, info = env.step(dummy_action)
 env.close()
 ```
 Currently, we only support sparse reward function (i.e., the agent receives `+1` when the task is finished). As sparse-reward RL is extremely hard to learn, currently we mainly focus on lifelong imitation learning.
