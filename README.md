@@ -1,7 +1,20 @@
 <div align="center">
 <img src="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/images/libero_logo.png" width="360">
 
-**Benchmarking Knowledge Transfer for Lifelong Robot Learning**
+
+<p align="center">
+<a href="https://github.com/Lifelong-Robot-Learning/LIBERO/actions">
+<img alt="Tests Passing" src="https://github.com/anuraghazra/github-readme-stats/workflows/Test/badge.svg" />
+</a>
+<a href="https://github.com/Lifelong-Robot-Learning/LIBERO/graphs/contributors">
+<img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/Lifelong-Robot-Learning/LIBERO" />
+</a>
+<a href="https://github.com/Lifelong-Robot-Learning/LIBERO/issues">
+<img alt="Issues" src="https://img.shields.io/github/issues/UT-Austin-RPL/deoxys_control?color=0088ff" />
+
+## **Benchmarking Knowledge Transfer for Lifelong Robot Learning**
+
+Bo Liu, Yifeng Zhu, Chongkai Gao, Yihao Feng, Qiang Liu, Yuke Zhu, Peter Stone
 
 [[Website]](https://libero-project.github.io)
 [[Paper]](https://arxiv.org/pdf/2306.03310.pdf)
