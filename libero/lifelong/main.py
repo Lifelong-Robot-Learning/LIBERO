@@ -3,6 +3,7 @@ import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import sys
 import json
+import multiprocessing
 import pprint
 import time
 from pathlib import Path
@@ -265,4 +266,7 @@ def main(hydra_cfg):
 
 
 if __name__ == "__main__":
+    # Set the multiprocessing start method to 'spawn'
+    if multiprocessing.get_start_method(allow_none=True) != "spawn":  
+        multiprocessing.set_start_method("spawn", force=True)
     main()
