@@ -16,9 +16,9 @@ class Libero_Floor_Manipulation(BDDLBaseDomain):
         self.floor_offset = (0, 0, -0.035)
 
         self.z_offset = -0.025
-        kwargs.update(
-            {"robots": [f"OnTheGround{robot_name}" for robot_name in kwargs["robots"]]}
-        )
+        # kwargs.update(
+        #     {"robots": [f"OnTheGround{robot_name}" for robot_name in kwargs["robots"]]}
+        # )
         kwargs.update({"workspace_offset": self.floor_offset})
         kwargs.update({"arena_type": "floor"})
 

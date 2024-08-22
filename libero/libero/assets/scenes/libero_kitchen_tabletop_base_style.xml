@@ -41,17 +41,17 @@
   </asset>
   <worldbody>
     <!-- Floor -->
-    <geom condim="3" group="1" material="floorplane" name="floor" pos="0 0 0" size="3 3 .125" type="plane"/>
-    <geom pos="-1.65 0.0 0.90" quat="0 0 0 1" type="mesh" mesh="kitchen_background_stove_vis" conaffinity="0" contype="0" group="1" material="kitchen_background_stove"/>
-    <geom pos="-1.50 0.23 0.93" quat="0.30 0 0 0.90" type="mesh" mesh="kitchen_background_hot_pot_vis" conaffinity="0" contype="0" group="1" material="kitchen_background_hot_pot"/>
-    <geom pos="-1.85 -0.85 0.90" quat="0 0 0 1" type="mesh" mesh="kitchen_background_pot_vis" conaffinity="0" contype="0" group="1" material="kitchen_background_pot"/>
-    <geom pos="-1.75 -2.4 0" quat="0 0 0 1" type="mesh" mesh="kitchen_background_fridge_vis" conaffinity="0" contype="0" group="1" material="kitchen_background_fridge"/>
-    <geom pos="-1.65 0.0 0.0" quat="0 0 0 1" type="mesh" mesh="kitchen_background_vis" conaffinity="0" contype="0" group="1" material="kitchen_background"/>
-    
     <light name="light_kitchen" diffuse=".8 .8 .8" dir="0 0 -1" directional="true" pos="-1.75 0 1.6" specular="0.8 0.8 0.8" castshadow="false"/>
 
-    <!-- <geom pos="-1.25 2.25 1.5" quat="0.6532815 0.6532815 0.2705981 0.2705981" size="1.06 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_leftcorner_visual" material="walls_mat"/>
-    <geom pos="-1.25 -2.25 1.5" quat="0.6532815 0.6532815 -0.2705981 -0.2705981" size="1.06 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_rightcorner_visual" material="walls_mat"/> -->
+    <geom condim="3" group="1" material="floorplane" name="floor" pos="0 0 0" size="3 3 .125" type="plane"/>
+
+    <geom name="kitchen_stove" pos="-1.65 0.0 0.90" quat="0 0 0 1" type="mesh" mesh="kitchen_background_stove_vis" conaffinity="0" contype="0" group="1" material="kitchen_background_stove"/>
+    
+    <geom name="background_hot_pot" pos="-1.50 0.23 0.93" quat="0.30 0 0 0.90" type="mesh" mesh="kitchen_background_hot_pot_vis" conaffinity="0" contype="0" group="1" material="kitchen_background_hot_pot"/>
+    <geom name="kitchen_pot" pos="-1.85 -0.85 0.90" quat="0 0 0 1" type="mesh" mesh="kitchen_background_pot_vis" conaffinity="0" contype="0" group="1" material="kitchen_background_pot"/>
+    <geom name="kitchen_fridge" pos="-1.75 -2.4 0" quat="0 0 0 1" type="mesh" mesh="kitchen_background_fridge_vis" conaffinity="0" contype="0" group="1" material="kitchen_background_fridge"/>
+    <geom name="kitchen_background" pos="-1.65 0.0 0.0" quat="0 0 0 1" type="mesh" mesh="kitchen_background_vis" conaffinity="0" contype="0" group="1" material="kitchen_background"/>
+    
     <geom pos="0.5 3 1.5" quat="0.7071 0.7071 0 0" size="2.5 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_left_visual" material="walls_mat"/>
     <geom pos="0.5 -3 1.5" quat="0.7071 -0.7071 0 0" size="2.5 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_right_visual" material="walls_mat"/>
     <geom pos="-2 0 1.5" quat="0.5 0.5 0.5 0.5" size="3 1.5 0.01" type="box" conaffinity="0" contype="0" group="1" name="wall_rear_visual" material="walls_mat"/>

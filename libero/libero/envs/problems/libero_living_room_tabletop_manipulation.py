@@ -20,9 +20,21 @@ class Libero_Living_Room_Tabletop_Manipulation(BDDLBaseDomain):
         self.living_room_table_offset = (0, 0, 0.41)
         # For z offset of environment fixtures
         self.z_offset = 0.01 - self.living_room_table_full_size[2]
-        kwargs.update(
-            {"robots": [f"OnTheGround{robot_name}" for robot_name in kwargs["robots"]]}
-        )
+
+        self.robot_base_xpos_offset = {
+            "bins": (-0.5, -0.1, 0),
+            "empty": (-0.6, 0, 0),
+            "table": lambda table_length: (-0.16 - table_length / 2, 0, 0),
+            "coffee_table": lambda table_length: (-0.16 - table_length / 2, 0, 0.41),
+            "living_room_table": lambda table_length: (
+                -0.16 - table_length / 2,
+                0,
+                0.42,
+            ),
+        }
+        # kwargs.update(
+        #     {"robots": [f"OnTheGround{robot_name}" for robot_name in kwargs["robots"]]}
+        # )
         kwargs.update({"workspace_offset": self.living_room_table_offset})
         kwargs.update({"arena_type": "living_room"})
         if "scene_xml" not in kwargs or kwargs["scene_xml"] is None:

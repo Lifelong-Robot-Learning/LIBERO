@@ -148,6 +148,17 @@ class ControlEnv:
         self.env.close()
         del self.env
 
+class MjViewerRenderEnv(ControlEnv):
+    """
+    For visualization using mjviewer.
+    """
+
+    def __init__(self, **kwargs):
+        # This shouldn't be customized
+        # kwargs["has_renderer"] = True
+        # kwargs["has_offscreen_renderer"] = False
+        kwargs["renderer"] = "mjviewer"
+        super().__init__(**kwargs)
 
 class OffScreenRenderEnv(ControlEnv):
     """

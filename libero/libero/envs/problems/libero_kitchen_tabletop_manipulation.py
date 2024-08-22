@@ -20,9 +20,18 @@ class Libero_Kitchen_Tabletop_Manipulation(BDDLBaseDomain):
         self.kitchen_table_offset = (0.0, 0, 0.90)
         # For z offset of environment fixtures
         self.z_offset = 0.01 - self.kitchen_table_full_size[2]
-        kwargs.update(
-            {"robots": [f"Mounted{robot_name}" for robot_name in kwargs["robots"]]}
-        )
+
+        self.robot_base_xpos_offset = {
+             "bins": (-0.5, -0.1, 0),
+            "empty": (-0.6, 0, 0),
+            "table": lambda table_length: (-0.16 - table_length / 2, 0, 0),
+            "study_table": lambda table_length: (-0.25 - table_length / 2, 0, 0),
+            "kitchen_table": lambda table_length: (-0.16 - table_length / 2, 0, 0),
+        }
+
+        # kwargs.update(
+        #     {"robots": [f"Mounted{robot_name}" for robot_name in kwargs["robots"]]}
+        # )
         kwargs.update({"workspace_offset": self.kitchen_table_offset})
         kwargs.update({"arena_type": "kitchen"})
         if "scene_xml" not in kwargs or kwargs["scene_xml"] is None:

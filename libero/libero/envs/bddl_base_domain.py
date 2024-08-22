@@ -3,7 +3,7 @@ import os
 import robosuite.utils.transform_utils as T
 
 from copy import deepcopy
-from robosuite.environments.manipulation.single_arm_env import SingleArmEnv
+from robosuite.environments.manipulation.manipulation_env import ManipulationEnv
 from robosuite.models.tasks import ManipulationTask
 from robosuite.utils.placement_samplers import SequentialCompositeSampler
 from robosuite.utils.observables import Observable, sensor
@@ -34,7 +34,7 @@ def register_problem(target_class):
 import time
 
 
-class BDDLBaseDomain(SingleArmEnv):
+class BDDLBaseDomain(ManipulationEnv):
     """
     A base domain for parsing bddl files.
     """
@@ -136,7 +136,7 @@ class BDDLBaseDomain(SingleArmEnv):
             robots=robots,
             env_configuration=env_configuration,
             controller_configs=controller_configs,
-            mount_types="default",
+            base_types="default",
             gripper_types=gripper_types,
             initialization_noise=initialization_noise,
             use_camera_obs=use_camera_obs,
@@ -302,9 +302,13 @@ class BDDLBaseDomain(SingleArmEnv):
         # Adjust base pose accordingly
 
         if self._arena_type == "table":
-            xpos = self.robots[0].robot_model.base_xpos_offset["table"](
-                self.table_full_size[0]
-            )
+            robot_default_z = self.robots[0].robot_model.base_xpos_offset["table"](
+                1.0
+            )[-1]
+            xpos_plane = self.robot_base_xpos_offset["table"](self.table_full_size[0])[:2]
+            xpos = xpos_plane + (robot_default_z,)
+            
+
             self.robots[0].robot_model.set_base_xpos(xpos)
             mujoco_arena = TableArena(
                 table_full_size=self.table_full_size,
@@ -314,9 +318,17 @@ class BDDLBaseDomain(SingleArmEnv):
                 **self._arena_properties,
             )
         elif self._arena_type == "kitchen":
-            xpos = self.robots[0].robot_model.base_xpos_offset["kitchen_table"](
+            robot_default_z = self.robots[0].robot_model.base_xpos_offset["kitchen_table"](
+                1.0
+            )[-1]
+            xpos_plane = self.robot_base_xpos_offset["kitchen_table"](
                 self.kitchen_table_full_size[0]
-            )
+            )[:2]
+            xpos = xpos_plane + (robot_default_z,)
+
+            # xpos = self.robots[0].robot_model.base_xpos_offset["kitchen_table"](
+            #     self.kitchen_table_full_size[0]
+            # )
             self.robots[0].robot_model.set_base_xpos(xpos)
             mujoco_arena = KitchenTableArena(
                 table_full_size=self.kitchen_table_full_size,
@@ -326,7 +338,11 @@ class BDDLBaseDomain(SingleArmEnv):
             )
 
         elif self._arena_type == "floor":
-            xpos = self.robots[0].robot_model.base_xpos_offset["empty"]
+            robot_default_z = self.robots[0].robot_model.base_xpos_offset["empty"][-1]
+            xpos_plane = self.robot_base_xpos_offset["empty"][:2]
+            xpos = xpos_plane + (robot_default_z,)
+
+            # xpos = self.robots[0].robot_model.base_xpos_offset["empty"]
             self.robots[0].robot_model.set_base_xpos(xpos)
 
             mujoco_arena = EmptyArena(
@@ -334,9 +350,17 @@ class BDDLBaseDomain(SingleArmEnv):
                 **self._arena_properties,
             )
         elif self._arena_type == "coffee_table":
-            xpos = self.robots[0].robot_model.base_xpos_offset["coffee_table"](
+            robot_default_z = self.robots[0].robot_model.base_xpos_offset["coffee_table"](
+                1.0
+            )[-1]
+            xpos_plane = self.robot_base_xpos_offset["coffee_table"](
                 self.coffee_table_full_size[0]
-            )
+            )[:2]
+            xpos = xpos_plane + (robot_default_z,)
+
+            # xpos = self.robots[0].robot_model.base_xpos_offset["coffee_table"](
+            #     self.coffee_table_full_size[0]
+            # )
             self.robots[0].robot_model.set_base_xpos(xpos)
             mujoco_arena = CoffeeTableArena(
                 xml=self._arena_xml,
@@ -344,9 +368,17 @@ class BDDLBaseDomain(SingleArmEnv):
             )
 
         elif self._arena_type == "living_room":
-            xpos = self.robots[0].robot_model.base_xpos_offset["living_room_table"](
+            robot_default_z = self.robots[0].robot_model.base_xpos_offset["living_room_table"](
+                1.0
+            )[-1]
+            xpos_plane = self.robot_base_xpos_offset["living_room_table"](
                 self.living_room_table_full_size[0]
-            )
+            )[:2]
+            xpos = xpos_plane + (robot_default_z,)
+
+            # xpos = self.robots[0].robot_model.base_xpos_offset["living_room_table"](
+            #     self.living_room_table_full_size[0]
+            # )
             self.robots[0].robot_model.set_base_xpos(xpos)
             mujoco_arena = LivingRoomTableArena(
                 xml=self._arena_xml,
@@ -354,9 +386,17 @@ class BDDLBaseDomain(SingleArmEnv):
             )
 
         elif self._arena_type == "study":
-            xpos = self.robots[0].robot_model.base_xpos_offset["study_table"](
+            robot_default_z = self.robots[0].robot_model.base_xpos_offset["study_table"](
+                1.0
+            )[-1]
+            xpos_plane = self.robot_base_xpos_offset["study_table"](
                 self.study_table_full_size[0]
-            )
+            )[:2]
+            xpos = xpos_plane + (robot_default_z,)
+
+            # xpos = self.robots[0].robot_model.base_xpos_offset["study_table"](
+            #     self.study_table_full_size[0]
+            # )
             self.robots[0].robot_model.set_base_xpos(xpos)
             mujoco_arena = StudyTableArena(
                 xml=self._arena_xml,

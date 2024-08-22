@@ -56,7 +56,7 @@
     <geom pos="-1.9 0.5 1." quat="0.7071068 0 0 -0.7071068" type="mesh" mesh="study_wall_painting_vis" conaffinity="0" contype="0" group="1" name="study_wall_painging" material="study_wall_painting"/>
 
     <body name="study_table" pos="0 0 0" quat="1 0 0 0">
-        <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" type="mesh" mesh="desk_vis" conaffinity="0" contype="0" group="1" material="desk"/>
+        <geom name="desk" solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" type="mesh" mesh="desk_vis" conaffinity="0" contype="0" group="1" material="desk"/>
         <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" type="box" pos="-0.00000 0.00000 0.84929" quat="0.50000 -0.50000 0.50000 0.50000" size="0.03584 0.68946 1.39273" group="0" rgba="0.8 0.8 0.8 0.3"/>
         <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" type="box" pos="-0.50048 -0.69064 0.39431" quat="0.00000 0.00000 1.00000 0.00000" size="0.02002 0.05031 0.39407" group="0" rgba="0.8 0.8 0.8 0.3"/>
         <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" type="box" pos="0.49617 -0.69064 0.39431" quat="1.00000 -0.00000 -0.00000 -0.00000" size="0.02002 0.05031 0.39407" group="0" rgba="0.8 0.8 0.8 0.3"/>
@@ -65,10 +65,7 @@
         <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" type="box" pos="-0.00488 0.71473 0.02528" quat="0.70811 0.00000 -0.70610 -0.00000" size="0.02002 0.05031 0.51262" group="0" rgba="0.8 0.8 0.8 0.3"/>
         <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" type="box" pos="-0.00488 -0.69765 0.02528" quat="0.70811 0.00000 -0.70610 -0.00000" size="0.02002 0.05032 0.51262" group="0" rgba="0.8 0.8 0.8 0.3"/>    
      </body>
-    <!-- <geom pos="-1.85 0.5 0" quat="0.7071068 0 0 0.7071068" type="mesh" mesh="study_background" conaffinity="0" contype="0" group="1" name="plant" material="study_background"/> -->
     <geom pos="0.3 -0.6 0.9" quat="0.7071068 0 0 -0.7071068" solimp="0.998 0.998 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.1" type="mesh" mesh="floor_lamp_vis" conaffinity="0" contype="0" group="1" material="floor_lamp"/>
-    <!-- <geom pos="0.3 -0.25 1.6" conaffinity="0" contype="0" group="1"  quat="1 0 0 0" type="sphere" rgba="1 0 0 1" size="0.05"/> -->
-    <!-- <light pos="0.3 -0.25 1.6" name="lamp_light" diffuse=".8 0.8 0." dir="0 0 -1" directional="false" specular="0.3 0.3 0.3" castshadow="false"/> -->
 
     <geom pos="-1.85 0.5 0" quat="0.7071068 0 0 0.7071068" type="mesh" mesh="plant_vis" conaffinity="0" contype="0" group="1" name="plant" material="plant"/>
     <geom pos="-1.7 -1.0 0" quat="0.7071068 0 0 -0.7071068" type="mesh" mesh="office_book_shelf_vis" conaffinity="0" contype="0" group="1" name="office_book_shelf" material="office_book_shelf"/>
