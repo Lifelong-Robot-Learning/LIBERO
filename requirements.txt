@@ -7,7 +7,7 @@
  robomimic==0.2.0 
  einops==0.4.1
  thop==0.1.1-2209072238
- robosuite
+ robosuite==1.4.0
  bddl==1.0.1
  future==0.18.2 
  matplotlib==3.5.3 
