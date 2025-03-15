@@ -72,6 +72,20 @@ python benchmark_scripts/download_libero_datasets.py --datasets DATASET
 ```
 where ```DATASET``` is chosen from `[libero_spatial, libero_object, libero_100, libero_goal`.
 
+**NEW!!!**
+
+Alternatively, you can download the dataset from HuggingFace by using:
+```python
+python benchmark_scripts/download_libero_datasets.py --use-huggingface
+```
+
+This option can also be combined with the specific dataset selection:
+```python
+python benchmark_scripts/download_libero_datasets.py --datasets DATASET --use-huggingface
+```
+
+The datasets hosted on HuggingFace are available at [here](https://huggingface.co/datasets/yifengzhu-hf/LIBERO-datasets).
+
 
 # Getting Started
 
