@@ -318,10 +318,10 @@ class BDDLBaseDomain(ManipulationEnv):
                 **self._arena_properties,
             )
         elif self._arena_type == "kitchen":
-            robot_default_z = self.robots[0].robot_model.base_xpos_offset["kitchen_table"](
+            robot_default_z = self.robots[0].robot_model.base_xpos_offset["table"](
                 1.0
             )[-1]
-            xpos_plane = self.robot_base_xpos_offset["kitchen_table"](
+            xpos_plane = self.robot_base_xpos_offset["table"](
                 self.kitchen_table_full_size[0]
             )[:2]
             xpos = xpos_plane + (robot_default_z,)
@@ -338,8 +338,8 @@ class BDDLBaseDomain(ManipulationEnv):
             )
 
         elif self._arena_type == "floor":
-            robot_default_z = self.robots[0].robot_model.base_xpos_offset["empty"][-1]
-            xpos_plane = self.robot_base_xpos_offset["empty"][:2]
+            robot_default_z = self.robots[0].robot_model.base_xpos_offset["table"][-1]
+            xpos_plane = self.robot_base_xpos_offset["table"][:2]
             xpos = xpos_plane + (robot_default_z,)
 
             # xpos = self.robots[0].robot_model.base_xpos_offset["empty"]
@@ -368,7 +368,7 @@ class BDDLBaseDomain(ManipulationEnv):
             )
 
         elif self._arena_type == "living_room":
-            robot_default_z = self.robots[0].robot_model.base_xpos_offset["living_room_table"](
+            robot_default_z = self.robot_base_xpos_offset["living_room_table"](
                 1.0
             )[-1]
             xpos_plane = self.robot_base_xpos_offset["living_room_table"](
