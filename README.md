@@ -95,7 +95,7 @@ For a detailed walk-through, please either refer to the documentation or the not
 
 The following is a minimal example of retrieving a specific task from a specific task suite.
 ```python
-from libero.libero import benchmark
+from libero.libero import benchmark, get_libero_path
 from libero.libero.envs import OffScreenRenderEnv
 
 
