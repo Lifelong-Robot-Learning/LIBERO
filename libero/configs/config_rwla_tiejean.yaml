@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - data: default
+  - policy: bc_rwla_policy
+  - train: default
+  - eval: default
+  - lifelong: base
+  - test: null
+
+train:
+  checkpoint_interval: 5
+
+seed: 10000
+use_wandb: true
+wandb_project: "rwla"
+folder: null # use default path
+bddl_folder: "/home/tiejean/Workspace/TaskAgonosticManipulation/LIBERO/libero/libero/bddl_files"
+init_states_folder: "/home/tiejean/Workspace/TaskAgonosticManipulation/LIBERO/libero/libero/init_files" # use default path
+load_previous_model: false
+device: "cuda"
+task_embedding_format: "sentence-similarity"
+task_embedding_one_hot_offset: 1
+pretrain: false
+pretrain_model_path: ""
+benchmark_name: "LIBERO_SPATIAL"

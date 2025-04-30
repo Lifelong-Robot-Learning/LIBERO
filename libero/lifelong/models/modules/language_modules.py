@@ -46,5 +46,7 @@ class MLPEncoder(nn.Module):
         data:
             task_emb: (B, E)
         """
+        # if "task_emb" not in data:
+        #     import pdb; pdb.set_trace()
         h = self.projection(data["task_emb"])  # (B, H)
         return h

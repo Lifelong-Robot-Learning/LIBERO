@@ -56,7 +56,7 @@ def torch_save_model(model, model_path, cfg=None, previous_masks=None):
 
 
 def torch_load_model(model_path, map_location=None):
-    model_dict = torch.load(model_path, map_location=map_location)
+    model_dict = torch.load(model_path, map_location=map_location, weights_only=False)
     cfg = None
     if "cfg" in model_dict:
         cfg = model_dict["cfg"]
@@ -216,5 +216,9 @@ def get_task_embs(cfg, descriptions):
             return_tensors="pt",  # ask the function to return PyTorch tensors
         )
         task_embs = model(**tokens)["pooler_output"].detach()
+    elif cfg.task_embedding_format == "sentence-similarity":
+        from rwla.models import LanguageEncoder
+        encoder = LanguageEncoder()
+        task_embs = encoder(descriptions).detach()
     cfg.policy.language_encoder.network_kwargs.input_size = task_embs.shape[-1]
     return task_embs

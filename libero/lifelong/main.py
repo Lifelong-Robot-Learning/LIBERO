@@ -34,7 +34,7 @@ from libero.lifelong.utils import (
 )
 
 
-@hydra.main(config_path="../configs", config_name="config", version_base=None)
+@hydra.main(config_path="../configs", config_name="config_rwla", version_base=None)
 def main(hydra_cfg):
     # preprocessing
     yaml_config = OmegaConf.to_yaml(hydra_cfg)
@@ -167,8 +167,8 @@ def main(hydra_cfg):
             sys.exit(0)
 
     print(f"[info] start lifelong learning with algo {cfg.lifelong.algo}")
-    GFLOPs, MParams = compute_flops(algo, datasets[0], cfg)
-    print(f"[info] policy has {GFLOPs:.1f} GFLOPs and {MParams:.1f} MParams\n")
+    # GFLOPs, MParams = compute_flops(algo, datasets[0], cfg)
+    # print(f"[info] policy has {GFLOPs:.1f} GFLOPs and {MParams:.1f} MParams\n")
 
     # save the experiment config file, so we can resume or replay later
     with open(os.path.join(cfg.experiment_dir, "config.json"), "w") as f:
@@ -259,6 +259,7 @@ def main(hydra_cfg):
                 torch.save(
                     result_summary, os.path.join(cfg.experiment_dir, f"result.pt")
                 )
+                torch.save(algo.policy.state_dict(), os.path.join(cfg.experiment_dir, f"checkpoint_task{i}.pt"))
 
     print("[info] finished learning\n")
     if cfg.use_wandb:

@@ -100,6 +100,7 @@ class BasePolicy(nn.Module, metaclass=PolicyMeta):
     def preprocess_input(self, data, train_mode=True):
         if train_mode:  # apply augmentation
             if self.cfg.train.use_augmentation:
+                # import pdb; pdb.set_trace()
                 img_tuple = self._get_img_tuple(data)
                 aug_out = self._get_aug_output_dict(self.img_aug(img_tuple))
                 for img_name in self.image_encoders.keys():

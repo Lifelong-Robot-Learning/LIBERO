@@ -104,7 +104,7 @@ def evaluate_one_task_success(
         init_states_path = os.path.join(
             cfg.init_states_folder, task.problem_folder, task.init_states_file
         )
-        init_states = torch.load(init_states_path)
+        init_states = torch.load(init_states_path, weights_only=False)
         num_success = 0
         for i in range(eval_loop_num):
             env.reset()
@@ -131,8 +131,11 @@ def evaluate_one_task_success(
                 steps += 1
 
                 data = raw_obs_to_tensor_obs(obs, task_emb, cfg)
-                actions = algo.policy.get_action(data)
-
+                if hasattr(algo, "policy"):
+                    actions = algo.policy.get_action(data)
+                else:
+                    actions = algo.get_action(data)
+                
                 obs, reward, done, info = env.step(actions)
 
                 # record the sim states for replay purpose

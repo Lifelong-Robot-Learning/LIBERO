@@ -171,6 +171,8 @@ class DataAugGroup(nn.Module):
             split_channels.append(x_groups[i].shape[1])
         if self.training:
             x = torch.cat(x_groups, dim=1)
+            if x.shape[-1] == 3 and x.shape[-2] == 128:
+                x = x.permute(0, 1, 4, 2, 3)
             out = self.aug_layer(x)
             out = torch.split(out, split_channels, dim=1)
             return out

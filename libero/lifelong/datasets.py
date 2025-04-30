@@ -71,6 +71,10 @@ class SequenceVLDataset(Dataset):
 
     def __getitem__(self, idx):
         return_dict = self.sequence_dataset.__getitem__(idx)
+        return_dict["obs"]["agentview_rgb"] = return_dict["obs"]["agentview_rgb"].astype(np.float32)
+        return_dict["obs"]["eye_in_hand_rgb"] = return_dict["obs"]["eye_in_hand_rgb"].astype(np.float32)
+        return_dict["obs"]["gripper_states"] = return_dict["obs"]["gripper_states"].astype(np.float32)
+        return_dict["obs"]["joint_states"] = return_dict["obs"]["joint_states"].astype(np.float32)
         return_dict["task_emb"] = self.task_emb
         return return_dict
 
