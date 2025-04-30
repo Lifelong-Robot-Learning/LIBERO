@@ -1,0 +1,83 @@
+# @package _global_
+
+
+defaults:
+ - _self_
+ - data: default
+ - policy: bc_rwla_policy
+ - train: default
+ - eval: default
+ - lifelong: base
+ - test: null
+
+seed: 10000
+use_wandb: true
+wandb_project: "lifelong learning"
+folder: null # "/mnt/data/adityas/CS395TRobotManipulationSp25/LIBERO/libero/libero"
+bddl_folder: "/mnt/data/adityas/CS395TRobotManipulationSp25/LIBERO/libero/libero/bddl_files"
+init_states_folder: "/mnt/data/adityas/CS395TRobotManipulationSp25/LIBERO/libero/libero/init_files" # use default path
+load_previous_model: false
+device: "cuda"
+device_id: 0
+device_id: 0
+task_embedding_format: "sentence-similarity"
+task_embedding_one_hot_offset: 1
+pretrain: false
+pretrain_model_path: ""
+benchmark_name: "LIBERO_OBJECT"
+# checkpoint_path: "/mnt/data/adityas/CS395TRobotManipulationSp25/experiments/LIBERO_OBJECT/Sequential/BCRWLAPolicy_seed10000/run_044/task0_model.pth"
+# ---------------------------------
+
+data:
+  task_order_index: 0  
+  seq_len: 10  # Sequence length for temporal processing
+  obs:
+    modality:
+      rgb: ["agentview_rgb", "eye_in_hand_rgb"]
+      low_dim: ["joint_states", "gripper_states"]
+
+train:
+  batch_size: 32
+  num_workers: 2
+  persistent_workers: true
+  n_epochs: 50
+  grad_clip: 100.0
+  checkpoint_dir: ./checkpoints
+  checkpoint_interval: 5
+  resume: true
+  # resume_path: ""  # Path to checkpoint to resume from
+  optimizer:
+    name: AdamW
+    kwargs:
+      lr: 0.0001
+      weight_decay: 0.0001
+      betas: [0.9, 0.999]
+  scheduler:
+    name: CosineAnnealingLR
+    kwargs:
+      eta_min: 0.00001
+
+lifelong:
+  memory_capacity: 500
+  demos_per_task: 30
+  epochs_per_task: 50
+  eval_interval: 10
+  replay_batch_size: 32
+  replay_coef: 1.0
+  resume_task_idx: 0  # Task index to resume from if resuming
+
+rwla:
+  # Reviewing phase settings
+  num_rollouts: 30
+  max_steps: 50
+  
+  # Retrieval settings
+  num_retrieved_demos: 20
+  
+  # Selective weighting settings
+  weight_increment: 0.3
+  max_weight: 2.0
+  
+  # Local adaptation settings
+  adaptation_epochs: 30
+  adaptation_lr: 0.001

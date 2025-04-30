@@ -113,7 +113,6 @@ def parse_args():
         ), "[error] load_task should be in [0, ..., 9]"
     return args
 
-
 def main():
     args = parse_args()
     # e.g., experiments/LIBERO_SPATIAL/Multitask/BCRNNPolicy_seed100/

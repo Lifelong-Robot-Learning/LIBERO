@@ -255,6 +255,8 @@ class BCTransformerPolicy(BasePolicy):
 
     def spatial_encode(self, data):
         # 1. encode extra
+        data["obs"]["gripper_states"] = data["obs"]["gripper_states"].float()
+        data["obs"]["joint_states"] = data["obs"]["joint_states"].float()
         extra = self.extra_encoder(data["obs"])  # (B, T, num_extra, E)
 
         # 2. encode language, treat it as action token
@@ -268,7 +270,10 @@ class BCTransformerPolicy(BasePolicy):
         # 3. encode image
         for img_name in self.image_encoders.keys():
             x = data["obs"][img_name]
+            if x.shape[-1] == 3:
+                x.permute(0, 1, 4, 2, 3)
             B, T, C, H, W = x.shape
+            assert C == 3
             img_encoded = self.image_encoders[img_name]["encoder"](
                 x.reshape(B * T, C, H, W),
                 langs=data["task_emb"]

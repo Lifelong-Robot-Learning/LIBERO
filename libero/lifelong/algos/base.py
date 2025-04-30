@@ -126,6 +126,22 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
         return loss.item()
 
     def learn_one_task(self, dataset, task_id, benchmark, result_summary):
+        # task = benchmark.get_task(task_id)
+        # task_emb = benchmark.get_task_emb(task_id)
+        # sim_states = (
+        #     result_summary[task_str] if self.cfg.eval.save_sim_states else None
+        # )
+
+        # success_rate = evaluate_one_task_success(
+        #             cfg=self.cfg,
+        #             algo=self,
+        #             task=task,
+        #             task_emb=task_emb,
+        #             task_id=task_id,
+        #             sim_states=sim_states,
+        #             task_str="",
+        #         )
+        # import pdb; pdb.set_trace()
 
         self.start_task(task_id)
 
@@ -143,6 +159,7 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
             num_workers=self.cfg.train.num_workers,
             sampler=RandomSampler(dataset),
             persistent_workers=True,
+            pin_memory=True
         )
 
         prev_success_rate = -1.0
@@ -159,6 +176,8 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
         task_emb = benchmark.get_task_emb(task_id)
 
         # start training
+        import math
+        best_training_loss = math.inf
         for epoch in range(0, self.cfg.train.n_epochs + 1):
 
             t0 = time.time()
@@ -178,6 +197,7 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
                 training_loss /= len(train_dataloader)
             t1 = time.time()
 
+            best_training_loss = min(best_training_loss, training_loss)
             print(
                 f"[info] Epoch: {epoch:3d} | train loss: {training_loss:5.2f} | time: {(t1-t0)/60:4.2f}"
             )
@@ -224,6 +244,15 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
                     + f"| succ. AoC {tmp_successes.sum()/cumulated_counter:4.2f} | time: {(t1-t0)/60:4.2f}",
                     flush=True,
                 )
+                
+                if self.cfg.use_wandb:
+                    import wandb
+                    wandb.log({"epoch": epoch, 
+                        "loss": training_loss, 
+                        "best loss": best_training_loss,
+                        "success rates": success_rate,
+                        "best success rates": prev_success_rate,
+                        "learning_rate": self.scheduler.get_last_lr()[0]})
 
             if self.scheduler is not None and epoch > 0:
                 self.scheduler.step()
@@ -253,5 +282,243 @@ class Sequential(nn.Module, metaclass=AlgoMeta):
         successes[idx_at_best_succ:] = successes[idx_at_best_succ]
         return successes.sum() / cumulated_counter, losses.sum() / cumulated_counter
 
+    def learn_one_task_with_memory_replay(self, dataset, task_id, benchmark, result_summary, memory, replay_batch_size=32, replay_coef=0.5):
+        """
+        Learn one task with experience replay from memory
+        This extends the learn_one_task method with memory replay mechanism for RWLA algorithm.
+        """
+        self.start_task(task_id)
+
+        # recover the corresponding manipulation task ids
+        gsz = self.cfg.data.task_group_size
+        manip_task_ids = list(range(task_id * gsz, (task_id + 1) * gsz))
+
+        model_checkpoint_name = os.path.join(
+            self.experiment_dir, f"task{task_id}_model.pth"
+        )
+
+        train_dataloader = DataLoader(
+            dataset,
+            batch_size=self.cfg.train.batch_size,
+            num_workers=0, #self.cfg.train.num_workers,
+            sampler=RandomSampler(dataset),
+            persistent_workers=False,
+            pin_memory=True
+        )
+
+        prev_success_rate = -1.0
+        best_state_dict = self.policy.state_dict()  # currently save the best model
+
+        # for evaluate how fast the agent learns on current task, this corresponds
+        # to the area under success rate curve on the new task.
+        cumulated_counter = 0.0
+        idx_at_best_succ = 0
+        successes = []
+        losses = []
+
+        task = benchmark.get_task(task_id)
+        task_emb = benchmark.get_task_emb(task_id)
+
+        # start training
+        import math
+        best_training_loss = math.inf
+        for epoch in range(0, self.cfg.train.n_epochs + 1):
+        # for epoch in range(0, 2):
+            t0 = time.time()
+
+            if epoch > 0:  # update
+                self.policy.train()
+                training_loss = 0.0
+                replay_loss = 0.0
+                
+                for (idx, data) in enumerate(train_dataloader):
+                    # Move current task data to device
+                    data = self.map_tensor_to_device(data)
+                    
+                    self.optimizer.zero_grad()
+                    task_loss = self.policy.compute_loss(data)
+                    
+                    # Add experience replay if not first task and memory has data
+                    if task_id > 0 and memory.get_memory_size() > 0:
+                        try:
+                            replay_batch = memory.get_replay_batch(
+                                batch_size=min(replay_batch_size, memory.get_memory_size())
+                            )
+                            # import pdb; pdb.set_trace()
+                            if len(replay_batch) > 0:
+                                replay_data = {}
+                                
+                                replay_obs = {}
+                                for key in ["agentview_rgb", "eye_in_hand_rgb", "gripper_states", "joint_states"]:
+                                    items = []
+                                    for demo in replay_batch:
+                                        if "obs" in demo and key in demo["obs"]:
+                                            items.append(demo["obs"][key])
+                                    
+                                    if items:
+                                        replay_obs[key] = torch.stack(items).to(self.cfg.device)
+                                
+                                replay_data["obs"] = replay_obs
+                                
+                                actions = []
+                                task_embs = []
+                                language = []
+                                for demo in replay_batch:
+                                    if "actions" in demo:
+                                        actions.append(demo["actions"])
+                                    if "language_description" in demo:
+                                        language.append(demo["language_description"])
+                                
+                                task_embs = [demo["task_emb"] for demo in replay_batch if "task_emb" in demo]
+                                if task_embs:
+                                    replay_data["task_emb"] = torch.stack(task_embs).to(self.cfg.device)
+                                if actions:
+                                    replay_data["actions"] = torch.stack(actions).to(self.cfg.device)
+                                if language:
+                                    replay_data["language"] = language
+                                    
+                                # Compute loss on replay data if we have valid data
+                                if "actions" in replay_data and replay_data["obs"] and len(replay_data["obs"]) > 0:
+                                    memory_loss = self.policy.compute_loss(replay_data)
+                                    
+                                    weighted_memory_loss = replay_coef * memory_loss
+                                    combined_task_loss = task_loss + weighted_memory_loss
+                                    
+                                    replay_loss += memory_loss.item()
+                                    
+                                    (self.loss_scale * combined_task_loss).backward()
+                                else:
+                                    # If replay data processing failed, just use current task loss
+                                    (self.loss_scale * task_loss).backward()
+                            else:
+                                # If no replay batch, just use current task loss
+                                (self.loss_scale * task_loss).backward()
+                                
+                        except Exception as e:
+                            # If anything fails in replay, just use current task loss
+                            print(f"[warning] Experience replay failed: {e}")
+                            import traceback
+                            traceback.print_exc()
+                            (self.loss_scale * task_loss).backward()
+                    else:
+                        # For first task, just use current task loss
+                        (self.loss_scale * task_loss).backward()
+                    
+                    if self.cfg.train.grad_clip is not None:
+                        grad_norm = nn.utils.clip_grad_norm_(
+                            self.policy.parameters(), self.cfg.train.grad_clip
+                        )
+                    
+                    self.optimizer.step()
+                    training_loss += task_loss.item()
+                    
+                training_loss /= len(train_dataloader)
+                if task_id > 0 and memory.get_memory_size() > 0:
+                    replay_loss /= max(1, len(train_dataloader))
+                    print(f"[info] Task loss: {training_loss:.4f}, Replay loss: {replay_loss:.4f}")
+                    
+            else:  # just evaluate the zero-shot performance on 0-th epoch
+                training_loss = 0.0
+                for (idx, data) in enumerate(train_dataloader):
+                    loss = self.eval_observe(data)
+                    training_loss += loss
+                training_loss /= len(train_dataloader)
+                
+            t1 = time.time()
+
+            best_training_loss = min(best_training_loss, training_loss)
+            print(
+                f"[info] Epoch: {epoch:3d} | train loss: {training_loss:5.2f} | time: {(t1-t0)/60:4.2f}"
+            )
+
+            # Evaluation code - same as in original method
+            if epoch % self.cfg.eval.eval_every == 0:  # evaluate BC loss
+                losses.append(training_loss)
+
+                t0 = time.time()
+
+                task_str = f"k{task_id}_e{epoch//self.cfg.eval.eval_every}"
+                sim_states = (
+                    result_summary[task_str] if self.cfg.eval.save_sim_states else None
+                )
+                success_rate = evaluate_one_task_success(
+                    cfg=self.cfg,
+                    algo=self,
+                    task=task,
+                    task_emb=task_emb,
+                    task_id=task_id,
+                    sim_states=sim_states,
+                    task_str="",
+                )
+                successes.append(success_rate)
+
+                if prev_success_rate < success_rate:
+                    torch_save_model(self.policy, model_checkpoint_name, cfg=self.cfg)
+                    prev_success_rate = success_rate
+                    idx_at_best_succ = len(losses) - 1
+
+                t1 = time.time()
+
+                cumulated_counter += 1.0
+                ci = confidence_interval(success_rate, self.cfg.eval.n_eval)
+                tmp_successes = np.array(successes)
+                tmp_successes[idx_at_best_succ:] = successes[idx_at_best_succ]
+                print(
+                    f"[info] Epoch: {epoch:3d} | succ: {success_rate:4.2f} ± {ci:4.2f} | best succ: {prev_success_rate} "
+                    + f"| succ. AoC {tmp_successes.sum()/cumulated_counter:4.2f} | time: {(t1-t0)/60:4.2f}",
+                    flush=True,
+                )
+                
+                # Log to wandb if enabled
+                if self.cfg.use_wandb:
+                    import wandb
+                    wandb_log_dict = {
+                        "epoch": epoch, 
+                        "loss": training_loss, 
+                        "best loss": best_training_loss,
+                        "success rates": success_rate,
+                        "best success rates": prev_success_rate
+                    }
+                    
+                    # Add replay loss if applicable
+                    # if task_id > 0 and memory.get_memory_size() > 0:
+                    #     wandb_log_dict["replay_loss"] = replay_loss
+                    
+                    # Add learning rate if scheduler exists
+                    if self.scheduler is not None:
+                        wandb_log_dict["learning_rate"] = self.scheduler.get_last_lr()[0]
+                        
+                    wandb.log(wandb_log_dict)
+
+            # Step scheduler
+            if self.scheduler is not None and epoch > 0:
+                self.scheduler.step()
+
+        # load the best performance agent on the current task
+        self.policy.load_state_dict(torch_load_model(model_checkpoint_name)[0])
+
+        # end learning the current task, some algorithms need post-processing
+        self.end_task(dataset, task_id, benchmark)
+
+        # return the metrics regarding forward transfer
+        losses = np.array(losses)
+        successes = np.array(successes)
+        auc_checkpoint_name = os.path.join(
+            self.experiment_dir, f"task{task_id}_auc.log"
+        )
+        torch.save(
+            {
+                "success": successes,
+                "loss": losses,
+            },
+            auc_checkpoint_name,
+        )
+
+        # pretend that the agent stops learning once it reaches the peak performance
+        losses[idx_at_best_succ:] = losses[idx_at_best_succ]
+        successes[idx_at_best_succ:] = successes[idx_at_best_succ]
+        return successes.sum() / cumulated_counter, losses.sum() / cumulated_counter
+
+        
     def reset(self):
         self.policy.reset()
