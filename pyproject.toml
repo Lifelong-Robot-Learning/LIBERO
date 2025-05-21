@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "libero"
+version = "0.1.0"
+description = "LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning"
+readme = "README.md"
+requires-python = ">=3"
+authors = [
+    { name = "Bo Liu", email = "bliu@cs.utexas.edu" },
+    { name = "Yifeng Zhu", email = "yifengz@cs.utexas.edu" },
+    { name = "Chongkai Gao" },
+    { name = "Yihao Feng" },
+    { name = "Qiang Liu" },
+    { name = "Yuke Zhu" },
+    { name = "Peter Stone" },
+]
+# dependencies = [] # install_requires was empty
+
+# If you have a project URL, you can add it here:
+# [project.urls]
+# "Homepage" = "https://your-project-url.com"
+
+[project.scripts]
+"lifelong.main" = "libero.lifelong.main:main"
+"lifelong.eval" = "libero.lifelong.evaluate:main"
+"libero.config_copy" = "scripts.config_copy:main"
+"libero.create_template" = "scripts.create_template:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."] # Search in the current directory (where pyproject.toml is)
+include = ["libero*"] # Include all packages starting with "libero" (e.g., "libero", "libero_utils") 
