@@ -182,3 +182,160 @@ If you find **LIBERO** to be useful in your own research, please consider citing
 |------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | Codebase         | [MIT License](LICENSE)                                                                                                                      |
 | Datasets         | [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)                 |
+
+# Dataset
+key list:
+📊 data/demo_0/actions
+📊 data/demo_0/dones
+📊 data/demo_0/obs/agentview_rgb
+📊 data/demo_0/obs/ee_ori
+📊 data/demo_0/obs/ee_pos
+📊 data/demo_0/obs/ee_states
+📊 data/demo_0/obs/eye_in_hand_rgb
+📊 data/demo_0/obs/gripper_states
+📊 data/demo_0/obs/joint_states
+📊 data/demo_0/rewards
+📊 data/demo_0/robot_states
+📊 data/demo_0/states
+📊 data/demo_1/actions
+📊 data/demo_1/dones
+📊 data/demo_1/obs/agentview_rgb
+📊 data/demo_1/obs/ee_ori
+📊 data/demo_1/obs/ee_pos
+📊 data/demo_1/obs/ee_states
+📊 data/demo_1/obs/eye_in_hand_rgb
+📊 data/demo_1/obs/gripper_states
+📊 data/demo_1/obs/joint_states
+📊 data/demo_1/rewards
+📊 data/demo_1/robot_states
+📊 data/demo_1/states
+
+detail:
+📊 数据集: data/demo_0/actions
+  Shape: (148, 7) ✅
+  Dtype: float64 ✅
+  Data (first 1 elements): [[ 0.24642857 -0.51696429  0.01607143  0.          0.01821429 -0.
+  -1.        ]] 📈
+
+📊 指定key对应的数据集: data/demo_0/dones
+  Shape: (148,) ✅
+  Dtype: uint8 ✅
+  Data (first 1 elements): [0] 📈
+
+📊 指定key对应的数据集: data/demo_0/obs/agentview_rgb
+  Shape: (148, 128, 128, 3) ✅
+  Dtype: uint8 ✅
+  Data (first 1 elements): [[[[172 164 159]
+   [176 167 163]
+   [175 167 160]
+   ...
+   [199 191 182]
+   [198 189 180]
+   [199 191 182]]
+
+  [[135 132 128]
+   [134 132 128]
+   [134 132 128]
+   ...
+   [138 136 131]
+   [138 136 131]
+   [138 136 132]]]] 📈
+
+📊 指定key对应的数据集: data/demo_0/obs/ee_ori
+  Shape: (148, 3) ✅
+  Dtype: float64 ✅
+  Data (first 1 elements): [[ 3.13415876 -0.04464834 -0.06500138]]
+
+📊 指定key对应的数据集: data/demo_0/obs/ee_pos
+  Shape: (148, 3) ✅
+  Dtype: float64 ✅
+  Data (first 1 elements): [[-0.13461222 -0.03159367  0.26087246]]
+
+📊 指定key对应的数据集: data/demo_0/obs/ee_states
+  Shape: (148, 6) ✅
+  Dtype: float64 ✅
+  Data (first 1 elements): [[-0.13461222 -0.03159367  0.26087246  3.13415876 -0.04464834 -0.06500138]] 📈
+
+📊 指定key对应的数据集: data/demo_0/obs/eye_in_hand_rgb
+  Shape: (148, 128, 128, 3) ✅
+  Dtype: uint8 ✅
+  Data (first 1 elements): [[[[ 57  57  57]
+   [ 57  57  57]
+   [ 57  57  57]
+   ...
+   [ 56  56  56]
+   [ 56  56  56]
+   [ 56  56  56]]
+
+  [[192 182 172]
+   [195 185 175]
+   [203 193 183]
+   ...
+   [102  63  55]
+   [103  85  82]
+   [103  86  84]]]] 📈
+
+📊 指定key对应的数据集: data/demo_0/obs/gripper_states
+  Shape: (148, 2) ✅
+  Dtype: float64 ✅
+  Data (first 1 elements): [[ 0.03610362 -0.03629859]] 📈
+
+📊 指定key对应的数据集: data/demo_0/obs/joint_states
+  Shape: (148, 7) ✅
+  Dtype: float64 ✅
+  Data (first 1 elements): [[-0.01647415 -0.12439009 -0.04895048 -2.40863181 -0.01870208  2.24320355
+   0.7614374 ]] 📈
+
+📊 指定key对应的数据集: data/demo_0/rewards
+  Shape: (148,) ✅
+  Dtype: uint8 ✅
+  Data (first 1 elements): [0] 📈
+
+只有抓到时会奖励：
+📊 指定key对应的数据集: data/demo_0/rewards
+  Shape: (148,) ✅
+  Dtype: uint8 ✅
+  Data (first 1 elements): [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1] 📈
+
+📊 指定key对应的数据集: data/demo_0/robot_states
+  Shape: (148, 9) ✅
+  Dtype: float64 ✅
+  Data (first 1 elements): [[ 0.03610362 -0.03629859 -0.13461222 -0.03159367  0.26087246  0.99967843
+  -0.01424114 -0.02073299  0.00322098]] 📈
+
+0.99967843 -0.01424114 -0.02073299  0.00322098 ❗不清楚对应的是哪里
+
+📊 指定key对应的数据集: data/demo_0/states
+  Shape: (148, 110) ✅
+  Dtype: float64 ✅
+  Data (first 1 elements): [[ 2.50000000e-01 -1.39058727e-02 -1.32895206e-01 -3.95190726e-02
+  -2.41748166e+00 -1.56499662e-02  2.24342081e+00  7.70441485e-01
+   3.39412254e-02 -3.41246158e-02 -1.19341153e-01 -2.39844686e-01
+   3.83793457e-02 -2.26022130e-03  2.27541573e-03  7.07695320e-01
+   7.06510473e-01 -1.43712746e-02  2.45927217e-01 -4.58262675e-03
+   7.07104752e-01 -1.69384343e-03  1.69371900e-03  7.07104753e-01
+   4.99867361e-02 -9.99780001e-02  9.14421729e-02  5.00114670e-01
+   4.99884733e-01  5.00043808e-01  4.99956758e-01 -1.51981690e-01
+   5.50623211e-02  8.92147605e-03  1.60411515e-10 -3.16300943e-07
+  -1.06977855e-06  1.00000000e+00  9.55577769e-02 -1.98123762e-01
+   6.69983663e-02  4.99972463e-01  5.00027595e-01  4.99983556e-01
+   5.00016384e-01  1.50242278e-01  3.00555488e-02  3.83998685e-02
+  -2.29096800e-03  2.29130000e-03  7.07626522e-01  7.06579229e-01
+  -1.99379192e-01 -7.87157716e-02  8.69543094e-03  8.87495516e-10
+  -4.17292295e-07 -2.42161980e-06  1.00000000e+00 -4.50482326e-02
+   1.55016014e-01 -1.65641087e-01  1.61861455e-01 -5.95531864e-02
+  -1.20304390e-02 -1.56137187e-01  5.76449863e-02 -5.71816273e-02
+  -3.19849468e-05  3.20957564e-06  9.09489769e-04  8.99028765e-05
+  -2.15092962e-06 -8.43101306e-04  8.81460714e-11 -7.43320061e-08
+   1.86903244e-05 -1.93300596e-08  1.62516811e-05 -8.34625155e-11
+  -4.66691074e-05  7.71475538e-05 -9.80411604e-01 -1.91370102e-04
+   2.94757962e-06 -3.58290715e-04 -3.41173844e-12 -3.28112589e-12
+   9.13729709e-08 -4.48594712e-10  4.05903512e-10  1.04577420e-13
+  -8.44980612e-06  5.70231207e-05 -3.45229732e-01 -1.41749996e-04
+   1.01964102e-08 -9.34021809e-04  1.53355879e-09  3.00852655e-09
+   4.82651896e-08  7.90797893e-08 -4.52425251e-10  4.04379947e-08
+  -9.63592933e-11 -1.90983833e-11  3.10686229e-06 -1.10637040e-08
+   1.20000589e-08  8.78974798e-12]] 📈
