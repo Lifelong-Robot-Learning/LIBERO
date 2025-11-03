@@ -106,7 +106,7 @@ DATASET_LINKS = {
 }
 
 HF_REPO_ID = "yifengzhu-hf/LIBERO-datasets"
-HF_ASSETS_REPO_ID = "jadechoghari/libero-assets"
+HF_ASSETS_REPO_ID = "lerobot/libero-assets"
 
 
 def download_assets_from_huggingface(download_dir=None):

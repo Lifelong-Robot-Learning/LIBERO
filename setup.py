@@ -12,7 +12,7 @@ lines = [x for x in lines if ".png" not in x]
 long_description = "".join(lines)
 
 setup(
-    name="libero",
+    name="hf_libero",
     packages=[package for package in find_packages() if package.startswith("libero")],
     install_requires=[],
     include_package_data=True,

@@ -93,7 +93,7 @@ The datasets hosted on HuggingFace are available at [here](https://huggingface.c
 
 **IMPORTANT: Asset Loading from HuggingFace Hub**
 
-The simulation assets (3D models, textures, scene files, etc.) are now automatically loaded from HuggingFace Hub instead of being bundled with the package. When you first run LIBERO, the assets will be automatically downloaded from the Hub repository [yifengzhu-hf/LIBERO-assets](https://huggingface.co/yifengzhu-hf/LIBERO-assets) and cached locally.
+The simulation assets (3D models, textures, scene files, etc.) are now automatically loaded from HuggingFace Hub instead of being bundled with the package. When you first run LIBERO, the assets will be automatically downloaded from the Hub repository [lerobot/libero-assets](https://huggingface.co/lerobot/libero-assets) and cached locally.
 
 This change:
 - Reduces the size of the installed package

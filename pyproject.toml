@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "libero"
-version = "0.1.1"
+name = "hf_libero"
+version = "0.1.2"
 description = "LIBERO: Benchmark and environments for robot learning"
 authors = [
     { name = "Jade Choghari", email = "jade.choghari@huggingface.co" },
@@ -40,5 +40,5 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/huggingface/lerobot-libero"
-Issues = "https://github.com/huggingface/lerobot-libero/issues"
+Homepage = "https://github.com/huggingface/LIBERO"
+Issues = "https://github.com/huggingface/LIBERO/issues"
