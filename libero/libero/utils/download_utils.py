@@ -106,6 +106,59 @@ DATASET_LINKS = {
 }
 
 HF_REPO_ID = "yifengzhu-hf/LIBERO-datasets"
+HF_ASSETS_REPO_ID = "jadechoghari/libero-assets"
+
+
+def download_assets_from_huggingface(download_dir=None):
+    """
+    Download LIBERO assets from Hugging Face Hub.
+    
+    Args:
+        download_dir (str): Directory where assets should be downloaded. 
+                          If None, uses a cache directory.
+    
+    Returns:
+        str: Path to the downloaded assets directory
+    """
+    if not HUGGINGFACE_AVAILABLE:
+        raise ImportError(
+            "Hugging Face Hub is not available. Install it with 'pip install huggingface_hub'"
+        )
+    
+    if download_dir is None:
+        # Use HF cache directory
+        from huggingface_hub import hf_hub_download
+        # Download to a local cache managed by huggingface_hub
+        cache_dir = os.path.join(os.path.expanduser("~"), ".cache", "libero", "assets")
+        download_dir = cache_dir
+    
+    # Check if assets already exist
+    if os.path.exists(download_dir):
+        asset_subdirs = ["articulated_objects", "stable_scanned_objects", 
+                        "turbosquid_objects", "stable_hope_objects", "scenes"]
+        if all(os.path.exists(os.path.join(download_dir, subdir)) for subdir in asset_subdirs[:4]):
+            print(f"Assets already downloaded at {download_dir}")
+            return download_dir
+    
+    # Create the destination folder
+    os.makedirs(download_dir, exist_ok=True)
+    
+    # Download the assets
+    print(f"Downloading LIBERO assets from Hugging Face...")
+    try:
+        folder_path = snapshot_download(
+            repo_id=HF_ASSETS_REPO_ID,
+            repo_type="model",
+            local_dir=download_dir,
+            local_dir_use_symlinks=False,  # Prevents using symlinks to cached files
+        )
+        print(f"Assets downloaded successfully to {download_dir}")
+    except Exception as e:
+        print(f"Failed to download assets from {HF_ASSETS_REPO_ID}: {e}")
+        print("Falling back to local assets if available...")
+        raise
+    
+    return download_dir
 
 
 def download_from_huggingface(dataset_name, download_dir, check_overwrite=True):

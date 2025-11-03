@@ -1,6 +1,6 @@
 import cloudpickle
 import ctypes
-import gym
+import gymnasium as gym
 import numpy as np
 import numpy as np
 import warnings

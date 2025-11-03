@@ -7,6 +7,9 @@ libero_config_path = os.environ.get(
 )
 config_file = os.path.join(libero_config_path, "config.yaml")
 
+# Global variable to cache assets path
+_assets_path_cache = None
+
 
 def get_default_path_dict(custom_location=None):
     if custom_location is None:
@@ -40,9 +43,9 @@ def get_libero_path(query_key):
         config = dict(yaml.load(f.read(), Loader=yaml.FullLoader))
 
     # Give warnings in case the user needs to access the paths
-    for key in config:
-        if not os.path.exists(config[key]):
-            print(f"[Warning]: {key} path {config[key]} does not exist!")
+    # for key in config:
+    #     if not os.path.exists(config[key]):
+    #         print(f"[Warning]: {key} path {config[key]} does not exist!")
 
     assert (
         query_key in config
@@ -61,6 +64,38 @@ def set_libero_default_path(custom_location=os.path.dirname(os.path.abspath(__fi
 
 if not os.path.exists(libero_config_path):
     os.makedirs(libero_config_path)
+
+def get_assets_path():
+    """
+    Get the path to assets, either from HuggingFace Hub or local installation.
+    
+    Returns:
+        str: Path to the assets directory
+    """
+    global _assets_path_cache
+    
+    # Return cached path if available
+    if _assets_path_cache is not None and os.path.exists(_assets_path_cache):
+        return _assets_path_cache
+    
+    # First try to use local assets if they exist
+    local_assets_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
+    if os.path.exists(local_assets_path):
+        _assets_path_cache = local_assets_path
+        return local_assets_path
+    
+    # Otherwise, download from HuggingFace Hub
+    try:
+        from libero.libero.utils.download_utils import download_assets_from_huggingface
+        print("Local assets not found. Downloading from HuggingFace Hub...")
+        assets_path = download_assets_from_huggingface()
+        _assets_path_cache = assets_path
+        return assets_path
+    except Exception as e:
+        print(f"Warning: Could not download assets from HuggingFace Hub: {e}")
+        # Fallback to local path even if it doesn't exist (will cause error later if needed)
+        return local_assets_path
+
 
 if not os.path.exists(config_file):
     # Create a default config file

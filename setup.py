@@ -15,12 +15,17 @@ setup(
     name="libero",
     packages=[package for package in find_packages() if package.startswith("libero")],
     install_requires=[],
-    eager_resources=["*"],
     include_package_data=True,
+    package_data={
+        "libero": [
+            "libero/bddl_files/**/*",
+            "libero/assets/**/*",
+            "libero/init_files/**/*",
+        ]
+    },
     python_requires=">=3",
     description="LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning",
     author="Bo Liu, Yifeng Zhu, Chongkai Gao, Yihao Feng, Qiang Liu, Yuke Zhu, Peter Stone",
-    # url="https://github.com/ARISE-Initiative/robosuite",
     author_email="bliu@cs.utexas.edu, yifengz@cs.utexas.edu",
     version="0.1.0",
     long_description=long_description,
