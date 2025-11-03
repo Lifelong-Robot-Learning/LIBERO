@@ -5,10 +5,7 @@ import numpy as np
 from robosuite.models.objects import MujocoXMLObject
 from robosuite.utils.mjcf_utils import xml_path_completion
 
-import pathlib
-
-absolute_path = pathlib.Path(__file__).parent.parent.parent.absolute()
-
+from libero.libero import get_assets_path
 from libero.libero.envs.base_object import (
     register_visual_change_object,
     register_object,
@@ -19,8 +16,8 @@ class TurbosquidObjects(MujocoXMLObject):
     def __init__(self, name, obj_name, joints=[dict(type="free", damping="0.0005")]):
         super().__init__(
             os.path.join(
-                str(absolute_path),
-                f"assets/turbosquid_objects/{obj_name}/{obj_name}.xml",
+                get_assets_path(),
+                f"turbosquid_objects/{obj_name}/{obj_name}.xml",
             ),
             name=name,
             joints=joints,

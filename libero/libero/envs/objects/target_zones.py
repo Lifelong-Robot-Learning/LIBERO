@@ -1,9 +1,7 @@
 import re
 import numpy as np
 import robosuite.utils.transform_utils as T
-import pathlib
 
-absolute_path = pathlib.Path(__file__).parent.parent.parent.absolute()
 from robosuite.models.objects import MujocoXMLObject
 from robosuite.utils.mjcf_utils import (
     xml_path_completion,

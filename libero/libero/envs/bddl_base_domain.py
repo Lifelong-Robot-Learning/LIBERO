@@ -19,6 +19,7 @@ from libero.libero.envs.object_states import *
 from libero.libero.envs.objects import *
 from libero.libero.envs.regions import *
 from libero.libero.envs.arenas import *
+from libero.libero import get_assets_path
 
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -119,7 +120,8 @@ class BDDLBaseDomain(SingleArmEnv):
         self.fixtures = []
         # self.custom_material_dict = {}
 
-        self.custom_asset_dir = os.path.abspath(os.path.join(DIR_PATH, "../assets"))
+        # Load assets from HuggingFace Hub or local installation
+        self.custom_asset_dir = get_assets_path()
 
         self.bddl_file_name = bddl_file_name
         self.parsed_problem = BDDLUtils.robosuite_parse_problem(self.bddl_file_name)

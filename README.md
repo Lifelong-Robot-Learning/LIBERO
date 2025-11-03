@@ -23,13 +23,16 @@ ______________________________________________________________________
 ![pull_figure](https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/images//fig1.png)
 </div>
 
-**LIBERO** is designed for studying knowledge transfer in multitask and lifelong robot learning problems. Successfully resolving these problems require both declarative knowledge about objects/spatial relationships and procedural knowledge about motion/behaviors. **LIBERO** provides:
+**LIBERO** is designed for studying knowledge transfer in multitask and lifelong robot learning problems. Successfully resolving these problems require both declarative knowledge about objects/spatial relationships and procedural knowledge about motion/behaviors. 
+This repository started as a fork of the official LIBERO benchmark
+. It is now maintained by the Hugging Face team, with modifications for compatibility with LeRobot
+, simplified installation, and large-scale robotics experiments.
+**LIBERO** provides:
 - a procedural generation pipeline that could in principle generate an infinite number of manipulation tasks.
 - 130 tasks grouped into four task suites: **LIBERO-Spatial**, **LIBERO-Object**, **LIBERO-Goal**, and **LIBERO-100**. The first three task suites have controlled distribution shifts, meaning that they require the transfer of a specific type of knowledge. In contrast, **LIBERO-100** consists of 100 manipulation tasks that require the transfer of entangled knowledge. **LIBERO-100** is further splitted into **LIBERO-90** for pretraining a policy and **LIBERO-10** for testing the agent's downstream lifelong learning performance.
 - five research topics.
 - three visuomotor policy network architectures.
 - three lifelong learning algorithms with the sequential finetuning and multitask learning baselines.
-
 ---
 
 
@@ -85,6 +88,19 @@ python benchmark_scripts/download_libero_datasets.py --datasets DATASET --use-hu
 ```
 
 The datasets hosted on HuggingFace are available at [here](https://huggingface.co/datasets/yifengzhu-hf/LIBERO-datasets).
+
+## Assets
+
+**IMPORTANT: Asset Loading from HuggingFace Hub**
+
+The simulation assets (3D models, textures, scene files, etc.) are now automatically loaded from HuggingFace Hub instead of being bundled with the package. When you first run LIBERO, the assets will be automatically downloaded from the Hub repository [lerobot/libero-assets](https://huggingface.co/lerobot/libero-assets) and cached locally.
+
+This change:
+- Reduces the size of the installed package
+- Ensures you always have the latest assets
+- Allows for easy asset versioning and updates
+
+The assets will be cached at `~/.cache/libero/assets/` and will only be downloaded once. If you have local assets installed from a previous version, those will be used instead.
 
 
 # Getting Started

@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hf_libero"
+version = "0.1.2"
+description = "LIBERO: Benchmark and environments for robot learning"
+authors = [
+    { name = "Jade Choghari", email = "jade.choghari@huggingface.co" },
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.8"
+
+dependencies = [
+    # egl probe: canonical repo
+    "hf-egl-probe>=1.0.1",
+    # core runtime / reproducible pins
+    "hydra-core>=1.2,<1.4",
+    "robomimic==0.2.0",
+    "robosuite==1.4.0",
+    "bddl==1.0.1",
+
+    # common libs
+    "numpy",
+    "transformers",
+    "easydict",
+    "einops",
+    "thop",
+    "matplotlib>=3.5.3",
+    "cloudpickle>=2.0.0",
+    "opencv-python",
+    "wandb",
+
+    # gym: compatible range
+    "gymnasium >= 0.29.0",
+    "mujoco>=3.0.0",
+    "future>=0.18.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/huggingface/LIBERO"
+Issues = "https://github.com/huggingface/LIBERO/issues"
