@@ -148,7 +148,7 @@ def download_assets_from_huggingface(download_dir=None):
     try:
         folder_path = snapshot_download(
             repo_id=HF_ASSETS_REPO_ID,
-            repo_type="model",
+            repo_type="dataset",
             local_dir=download_dir,
             local_dir_use_symlinks=False,  # Prevents using symlinks to cached files
         )
