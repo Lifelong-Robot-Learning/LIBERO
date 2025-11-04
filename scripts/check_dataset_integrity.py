@@ -4,7 +4,7 @@ from pathlib import Path
 import h5py
 import numpy as np
 
-from libero.libero import get_libero_path
+from libero import get_libero_path
 
 error_datasets = []
 for demo_file_name in Path(get_libero_path("datasets")).rglob("*hdf5"):

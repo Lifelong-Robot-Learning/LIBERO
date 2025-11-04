@@ -5,8 +5,8 @@ This is a script for creating various files frrom templates. This is to ease the
 import os
 import xml.etree.ElementTree as ET
 
-from libero.libero import get_libero_path
-from libero.libero.envs.textures import get_texture_file_list
+from libero import get_libero_path
+from libero.envs.textures import get_texture_file_list
 
 
 def create_problem_class_from_file(class_name):

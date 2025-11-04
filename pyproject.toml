@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "libero"
+version = "0.1.0"
+description = "LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning"
+readme = "README.md"
+requires-python = ">=3"
+license = { text = "MIT" } 
+authors = [
+    { name = "Bo Liu", email = "bliu@cs.utexas.edu" },
+    { name = "Yifeng Zhu", email = "yifengz@cs.utexas.edu" },
+    { name = "Chongkai Gao" },
+    { name = "Yihao Feng" },
+    { name = "Qiang Liu" },
+    { name = "Yuke Zhu" },
+    { name = "Peter Stone" },
+]
+keywords = ["robotics", "lifelong-learning", "benchmark"]
+dependencies = [
+    "hydra-core",
+    "numpy",
+    "wandb",
+    "easydict",
+    "transformers",
+    "opencv-python",
+    "robomimic",
+    "einops",
+    "thop",
+    "robosuite<1.5.0",
+    "bddl",
+    "future",
+    "matplotlib",
+    "cloudpickle",
+    "gym",
+    "torch",
+]
+
+[project.scripts]
+"lifelong.main" = "libero.lifelong.main:main"
+"lifelong.eval" = "libero.lifelong.evaluate:main"
+"libero.config_copy" = "scripts.config_copy:main"
+"libero.create_template" = "scripts.create_template:main"
+
+[tool.setuptools]
+package-data = { "libero" = ["assets/**/*", "bddl_files/**/*", "init_files/**/*"] }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.wheel]
+exclude = []

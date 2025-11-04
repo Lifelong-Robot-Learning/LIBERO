@@ -12,7 +12,7 @@ import numpy as np
 from pathlib import Path
 
 # import init_path
-from libero.libero import benchmark, get_libero_path
+from libero import benchmark, get_libero_path
 
 
 # def render_task(task, bddl_file, init_states, demo_file):
