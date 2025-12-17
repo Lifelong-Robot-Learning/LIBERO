@@ -251,7 +251,7 @@ def main():
         init_states_path = os.path.join(
             cfg.init_states_folder, task.problem_folder, task.init_states_file
         )
-        init_states = torch.load(init_states_path)
+        init_states = torch.load(init_states_path, weights_only=False)
         indices = np.arange(env_num) % init_states.shape[0]
         init_states_ = init_states[indices]
 
