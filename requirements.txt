@@ -13,3 +13,4 @@
  matplotlib==3.5.3 
  cloudpickle==2.1.0
  gym==0.25.2
+ pyyaml==6.0.3
