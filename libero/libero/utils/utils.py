@@ -25,6 +25,9 @@ def postprocess_model_xml(xml_str, cameras_dict={}):
 
     path = os.path.split(robosuite.__file__)[0]
     path_split = path.split("/")
+    libero_path = os.path.split(__file__)[0]
+    libero_path_split = libero_path.split("/")
+    libero_path_split.pop()  # remove 'utils'
 
     # replace mesh and texture file paths
     tree = ET.fromstring(xml_str)
@@ -45,6 +48,21 @@ def postprocess_model_xml(xml_str, cameras_dict={}):
             loc for loc, val in enumerate(old_path_split) if val == "robosuite"
         )  # last occurrence index
         new_path_split = path_split + old_path_split[ind + 1 :]
+        new_path = "/".join(new_path_split)
+        elem.set("file", new_path)
+    
+    # Correcting the libero asset paths
+    for elem in all_elements:
+        old_path = elem.get("file")
+        if old_path is None:
+            continue
+        old_path_split = old_path.split("/")
+        if "chiliocosm" not in old_path_split:
+            continue
+        ind = max(
+            loc for loc, val in enumerate(old_path_split) if val == "chiliocosm"
+        )  # last occurrence index
+        new_path_split = libero_path_split + old_path_split[ind + 1 :]
         new_path = "/".join(new_path_split)
         elem.set("file", new_path)
 
