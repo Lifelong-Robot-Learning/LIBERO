@@ -1,7 +1,3 @@
-[build-system]
-requires = ["setuptools>=64", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "libero"
 version = "0.1.0"
@@ -34,6 +30,9 @@ dependencies = [
 "libero.config_copy" = "scripts.config_copy:main"
 "libero.create_template" = "scripts.create_template:main"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["libero"]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["libero"]
