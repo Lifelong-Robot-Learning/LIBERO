@@ -48,13 +48,13 @@ ______________________________________________________________________
 # Installtion
 Please run the following commands in the given order to install the dependency for **LIBERO**.
 ```
-conda create -n libero python=3.8.13
+conda create -n libero python=3.11
 conda activate libero
 git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
 cd LIBERO
-pip install -r requirements.txt
-pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+CMAKE_POLICY_VERSION_MINIMUM=3.5 pip install -r requirements.txt
 ```
+The `CMAKE_POLICY_VERSION_MINIMUM` prefix keeps `egl_probe`, a transitive `robomimic` dependency, buildable on systems with CMake 4.
 
 Then install the `libero` package:
 ```

@@ -70,6 +70,7 @@ class SpatialSoftmax(nn.Module):
         pos_x, pos_y = torch.meshgrid(
             torch.linspace(-1, 1, in_w).float(),
             torch.linspace(-1, 1, in_h).float(),
+            indexing="ij",
         )
 
         pos_x = pos_x.reshape(1, in_w * in_h)
@@ -164,9 +165,14 @@ class ResnetEncoder(nn.Module):
 
         ### 1. encode input (images) using convolutional layers
         assert remove_layer_num <= 5, "[error] please only remove <=5 layers"
-        layers = list(torchvision.models.resnet18(pretrained=pretrained).children())[
-            :-remove_layer_num
-        ]
+        try:
+            weights = (
+                torchvision.models.ResNet18_Weights.DEFAULT if pretrained else None
+            )
+            resnet18 = torchvision.models.resnet18(weights=weights)
+        except AttributeError:
+            resnet18 = torchvision.models.resnet18(pretrained=pretrained)
+        layers = list(resnet18.children())[:-remove_layer_num]
         self.remove_layer_num = remove_layer_num
 
         assert (

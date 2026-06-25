@@ -17,7 +17,7 @@ setup(
     install_requires=[],
     eager_resources=["*"],
     include_package_data=True,
-    python_requires=">=3",
+    python_requires=">=3.11,<3.12",
     description="LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning",
     author="Bo Liu, Yifeng Zhu, Chongkai Gao, Yihao Feng, Qiang Liu, Yuke Zhu, Peter Stone",
     # url="https://github.com/ARISE-Initiative/robosuite",
@@ -25,6 +25,10 @@ setup(
     version="0.1.0",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+    ],
     entry_points={
         "console_scripts": [
             "lifelong.main=libero.lifelong.main:main",
