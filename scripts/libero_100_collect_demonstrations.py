@@ -266,7 +266,8 @@ if __name__ == "__main__":
         "--controller",
         type=str,
         default="OSC_POSE",
-        help="Choice of controller. Can be 'IK_POSE' or 'OSC_POSE'",
+        help="Choice of controller. Only 'OSC_POSE' is supported for LIBERO's Panda variants (robosuite's IK controller only recognizes robot name 'Panda').",
+        choices=["OSC_POSE"],
     )
     parser.add_argument("--device", type=str, default="spacemouse")
     parser.add_argument(
