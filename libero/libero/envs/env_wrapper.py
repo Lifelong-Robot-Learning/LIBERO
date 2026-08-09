@@ -193,13 +193,25 @@ class SegmentationRenderEnv(OffScreenRenderEnv):
     def reset(self):
         obs = self.env.reset()
         self.segmentation_id_mapping = {}
+        self.segmentation_robot_id = None
 
+        robot_instance_names = set()
+        for idx, robot in enumerate(self.env.robots):
+            robot_instance_names.add(f"{type(robot.robot_model).__name__}{idx}")
+            robot_instance_names.add(f"{type(robot.robot_model.base).__name__}{idx}")
+            for arm, gripper in robot.gripper.items():
+                robot_instance_names.add(f"{type(gripper).__name__}{idx}_{arm}")
+
+        # get_segmentation_instances() treats everything from segmentation_robot_id
+        # onward as robot, so this must be the lowest id among the robot's instances
         for i, instance_name in enumerate(list(self.env.model.instances_to_ids.keys())):
-            if instance_name == "Panda0":
+            if instance_name in robot_instance_names and (
+                self.segmentation_robot_id is None or i < self.segmentation_robot_id
+            ):
                 self.segmentation_robot_id = i
 
         for i, instance_name in enumerate(list(self.env.model.instances_to_ids.keys())):
-            if instance_name not in ["Panda0", "RethinkMount0", "PandaGripper0"]:
+            if instance_name not in robot_instance_names:
                 self.segmentation_id_mapping[i] = instance_name
 
         self.instance_to_id = {
