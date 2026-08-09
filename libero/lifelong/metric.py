@@ -104,7 +104,7 @@ def evaluate_one_task_success(
         init_states_path = os.path.join(
             cfg.init_states_folder, task.problem_folder, task.init_states_file
         )
-        init_states = torch.load(init_states_path)
+        init_states = torch.load(init_states_path, weights_only=False)
         num_success = 0
         for i in range(eval_loop_num):
             env.reset()
