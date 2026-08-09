@@ -8,10 +8,13 @@ import numpy as np
 import os
 import robosuite as suite
 import time
+from copy import deepcopy
 from glob import glob
-from robosuite import load_controller_config
+from robosuite import load_part_controller_config
+from robosuite.controllers.composite.composite_controller_factory import (
+    refactor_composite_controller_config,
+)
 from robosuite.wrappers import DataCollectionWrapper, VisualizationWrapper
-from robosuite.utils.input_utils import input2action
 
 
 import libero.libero.envs.bddl_utils as BDDLUtils
@@ -53,28 +56,50 @@ def collect_human_trajectory(
     saving = True
     count = 0
 
+    # Maintain gripper state between steps for every robot, since env.step
+    # expects one action vector covering all robots each call
+    all_prev_gripper_actions = [
+        {
+            f"{robot_arm}_gripper": np.repeat([0], robot.gripper[robot_arm].dof)
+            for robot_arm in robot.arms
+            if robot.gripper[robot_arm].dof > 0
+        }
+        for robot in env.robots
+    ]
+    active_robot_idx = 0 if env_configuration == "bimanual" else (arm == "left")
+
     while True:
         count += 1
         # Set active robot
-        active_robot = (
-            env.robots[0]
-            if env_configuration == "bimanual"
-            else env.robots[arm == "left"]
-        )
+        active_robot = env.robots[active_robot_idx]
 
         # Get the newest action
-        action, grasp = input2action(
-            device=device,
-            robot=active_robot,
-            active_arm=arm,
-            env_configuration=env_configuration,
-        )
+        input_ac_dict = device.input2action()
 
         # If action is none, then this a reset so we should break
-        if action is None:
+        if input_ac_dict is None:
             print("Break")
             saving = False
             break
+
+        action_dict = deepcopy(input_ac_dict)
+        for robot_arm in active_robot.arms:
+            controller_input_type = active_robot.part_controllers[robot_arm].input_type
+            if controller_input_type == "delta":
+                action_dict[robot_arm] = input_ac_dict[f"{robot_arm}_delta"]
+            elif controller_input_type == "absolute":
+                action_dict[robot_arm] = input_ac_dict[f"{robot_arm}_abs"]
+            else:
+                raise ValueError(f"Unsupported controller input type: {controller_input_type}")
+
+        env_action = [
+            robot.create_action_vector(all_prev_gripper_actions[i])
+            for i, robot in enumerate(env.robots)
+        ]
+        env_action[active_robot_idx] = active_robot.create_action_vector(action_dict)
+        action = np.concatenate(env_action)
+        for gripper_ac in all_prev_gripper_actions[active_robot_idx]:
+            all_prev_gripper_actions[active_robot_idx][gripper_ac] = action_dict[gripper_ac]
 
         # Run environment step
 
@@ -230,7 +255,8 @@ if __name__ == "__main__":
         "--controller",
         type=str,
         default="OSC_POSE",
-        help="Choice of controller. Can be 'IK_POSE' or 'OSC_POSE'",
+        help="Choice of controller. Only 'OSC_POSE' is supported for LIBERO's Panda variants (robosuite's IK controller only recognizes robot name 'Panda').",
+        choices=["OSC_POSE"],
     )
     parser.add_argument("--device", type=str, default="spacemouse")
     parser.add_argument(
@@ -259,7 +285,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Get controller config
-    controller_config = load_controller_config(default_controller=args.controller)
+    robot_for_controller = args.robots[0] if isinstance(args.robots, list) else args.robots
+    controller_config = load_part_controller_config(default_controller=args.controller)
+    controller_config = refactor_composite_controller_config(
+        controller_config, robot_for_controller, ["right"]
+    )
 
     # Create argument configuration
     config = {
@@ -310,17 +340,16 @@ if __name__ == "__main__":
         from robosuite.devices import Keyboard
 
         device = Keyboard(
-            pos_sensitivity=args.pos_sensitivity, rot_sensitivity=args.rot_sensitivity
+            env=env, pos_sensitivity=args.pos_sensitivity, rot_sensitivity=args.rot_sensitivity
         )
-        env.viewer.add_keypress_callback("any", device.on_press)
-        env.viewer.add_keyup_callback("any", device.on_release)
-        env.viewer.add_keyrepeat_callback("any", device.on_press)
+        env.viewer.add_keypress_callback(device.on_press)
     elif args.device == "spacemouse":
         from robosuite.devices import SpaceMouse
 
         device = SpaceMouse(
-            args.vendor_id,
-            args.product_id,
+            env=env,
+            vendor_id=args.vendor_id,
+            product_id=args.product_id,
             pos_sensitivity=args.pos_sensitivity,
             rot_sensitivity=args.rot_sensitivity,
         )
