@@ -45,7 +45,7 @@ ______________________________________________________________________
 - [License](#License)
 
 
-# Installtion
+# Installation
 Please run the following commands in the given order to install the dependency for **LIBERO**.
 ```
 conda create -n libero python=3.8.13
@@ -70,7 +70,7 @@ By default, the dataset will be stored under the ```LIBERO``` folder and all fou
 ```python
 python benchmark_scripts/download_libero_datasets.py --datasets DATASET
 ```
-where ```DATASET``` is chosen from `[libero_spatial, libero_object, libero_100, libero_goal`.
+where ```DATASET``` is chosen from `[libero_spatial, libero_object, libero_100, libero_goal]`.
 
 **NEW!!!**
 
@@ -156,7 +156,7 @@ By default the policies will be evaluated on the fly during training. If you hav
 
 ```shell
 python libero/lifelong/evaluate.py --benchmark BENCHMARK_NAME \
-                                   --task_id TASK_ID \ 
+                                   --task_id TASK_ID \
                                    --algo ALGO_NAME \
                                    --policy POLICY_NAME \
                                    --seed SEED \
