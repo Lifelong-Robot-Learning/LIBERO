@@ -65,14 +65,15 @@ class SiteObject:
         Checks whether an object is on this SiteObject.
         Useful for when the CompositeObject has holes and the object should
         be within one of the holes. Makes an approximation by treating the
-        object as a point, and the SiteObject as an axis-aligned grid.
+        object as a point in the SiteObject's local coordinate frame.
         Args:
             this_position: 3D position of this SiteObject
+            this_mat: rotation matrix from site-local to world coordinates
             other_position: 3D position of object to test for insertion
         """
         total_size = self.size  # np.abs(this_mat @ self.size)
 
-        delta_position = this_mat @ (other_position - this_position)
+        delta_position = this_mat.T @ (other_position - this_position)
         # print(total_size, " | ", delta_position)
         # print(total_size[2] < delta_position[2] < total_size[2] + other_height, np.all(np.abs(delta_position[:2]) < total_size[:2]))
         return total_size[2] - 0.005 < delta_position[2] < total_size[
