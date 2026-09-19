@@ -178,6 +178,8 @@ If you find **LIBERO** to be useful in your own research, please consider citing
 ```
 
 # License
+For controlled physics studies, see [optional per-object density overrides](docs/object_density_overrides.md).
+
 | Component        | License                                                                                                                             |
 |------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | Codebase         | [MIT License](LICENSE)                                                                                                                      |

@@ -374,6 +374,10 @@ class BDDLBaseDomain(SingleArmEnv):
 
         self._load_objects_in_arena(mujoco_arena)
 
+        from .object_density_config import apply_configured_densities
+
+        apply_configured_densities(self.objects_dict)
+
         self._load_sites_in_arena(mujoco_arena)
 
         self._generate_object_state_wrapper()

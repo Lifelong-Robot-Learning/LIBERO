@@ -1,0 +1,40 @@
+category,asset_xml,collision_bbox_cm,baseline_mass_g,nominal_target_mass_g,effective_density_kg_m3,reference_mass_g,status,scenario_assumption
+akita_black_bowl,libero/libero/assets/stable_scanned_objects/akita_black_bowl/akita_black_bowl.xml,10.7x10.7x5.1,5.591,120,2146,119.989,compiled_collision_model,11 cm empty ceramic bowl
+alphabet_soup,libero/libero/assets/stable_hope_objects/alphabet_soup/alphabet_soup.xml,6.2x7.6x6.2,25.851,200,774,200.090,compiled_collision_model,small filled soup can
+basket,libero/libero/assets/stable_scanned_objects/basket/basket.xml,17.0x15.7x14.1,136.107,250,184,250.437,compiled_collision_model,small empty basket
+bbq_sauce,libero/libero/assets/stable_hope_objects/bbq_sauce/bbq_sauce.xml,2.9x4.7x10.7,12.180,100,821,100.000,compiled_collision_model,small filled sauce bottle
+black_book,libero/libero/assets/turbosquid_objects/black_book/black_book.xml,2.9x11.0x13.4,42.547,200,470,199.971,compiled_collision_model,small hardback book
+bowl_drainer,libero/libero/assets/turbosquid_objects/bowl_drainer/bowl_drainer.xml,20.5x23.2x14.4,175.194,400,228,399.443,compiled_collision_model,small metal dish drainer
+butter,libero/libero/assets/stable_hope_objects/butter/butter.xml,1.7x4.0x7.6,5.247,50,953,50.006,compiled_collision_model,small butter pack
+chefmate8_frypan,libero/libero/assets/stable_scanned_objects/chefmate_8_frypan/chefmate_8_frypan.xml,35.6x20.4x5.8,50.247,500,995,499.959,compiled_collision_model,small empty frying pan
+cherries,libero/libero/assets/stable_hope_objects/cherries/cherries.xml,,,,1000,,asset_xml_missing,asset absent; unverified density placeholder
+chocolate_pudding,libero/libero/assets/stable_hope_objects/chocolate_pudding/chocolate_pudding.xml,8.0x4.6x2.7,10.186,80,785,79.961,compiled_collision_model,small pudding cup
+cookies,libero/libero/assets/stable_hope_objects/cookies/cookies.xml,1.9x6.2x8.3,9.643,50,519,50.045,compiled_collision_model,small cookie box
+corn,libero/libero/assets/stable_hope_objects/corn/corn.xml,,,,1000,,asset_xml_missing,asset absent; unverified density placeholder
+cream_cheese,libero/libero/assets/stable_hope_objects/cream_cheese/cream_cheese.xml,1.8x4.3x8.1,6.194,70,1130,69.990,compiled_collision_model,small cream-cheese pack
+desk_caddy,libero/libero/assets/turbosquid_objects/desk_caddy/desk_caddy.xml,15.1x43.4x16.7,277.963,500,180,500.334,compiled_collision_model,desktop organizer
+dining_set_group,libero/libero/assets/turbosquid_objects/dining_set_group/dining_set_group.xml,28.0x16.0x3.4,15.544,250,1608,249.943,compiled_collision_model,small dish-and-utensil set
+glazed_rim_porcelain_ramekin,libero/libero/assets/stable_scanned_objects/glazed_rim_porcelain_ramekin/glazed_rim_porcelain_ramekin.xml,8.9x8.9x4.2,9.660,100,1035,99.976,compiled_collision_model,9 cm empty ceramic ramekin
+ketchup,libero/libero/assets/stable_hope_objects/ketchup/ketchup.xml,5.6x14.6x3.7,23.217,150,646,149.981,compiled_collision_model,small filled ketchup bottle
+macaroni_and_cheese,libero/libero/assets/stable_hope_objects/macaroni_and_cheese/macaroni_and_cheese.xml,8.4x11.6x2.5,24.962,100,401,100.098,compiled_collision_model,small dry-food box
+mayo,libero/libero/assets/stable_hope_objects/mayo/mayo.xml,,,,1000,,asset_xml_missing,asset absent; unverified density placeholder
+milk,libero/libero/assets/stable_hope_objects/milk/milk.xml,5.3x13.1x5.3,31.666,350,1105,349.908,compiled_collision_model,small filled milk carton
+moka_pot,libero/libero/assets/turbosquid_objects/moka_pot/moka_pot.xml,8.1x14.8x15.2,68.243,350,513,350.086,compiled_collision_model,small empty moka pot
+new_salad_dressing,libero/libero/assets/stable_hope_objects/new_salad_dressing/new_salad_dressing.xml,5.3x14.6x3.6,21.785,150,689,150.095,compiled_collision_model,small filled dressing bottle
+orange_juice,libero/libero/assets/stable_hope_objects/orange_juice/orange_juice.xml,5.3x13.1x5.3,31.666,350,1105,349.908,compiled_collision_model,small filled juice carton
+plate,libero/libero/assets/stable_scanned_objects/plate/plate.xml,13.8x13.7x1.9,11.522,150,1302,150.018,compiled_collision_model,14 cm empty ceramic plate
+popcorn,libero/libero/assets/stable_hope_objects/popcorn/popcorn.xml,2.0x4.2x6.2,5.208,20,384,19.999,compiled_collision_model,small dry popcorn pack
+porcelain_mug,libero/libero/assets/turbosquid_objects/porcelain_mug/porcelain_mug.xml,12.5x9.6x10.6,16.463,250,1519,250.073,compiled_collision_model,small ceramic mug
+rack,libero/libero/assets/stable_scanned_objects/simple_rack/simple_rack.xml,14.0x27.8x12.1,142.064,400,282,400.621,compiled_collision_model,small metal rack
+red_coffee_mug,libero/libero/assets/turbosquid_objects/red_coffee_mug/red_coffee_mug.xml,12.3x9.3x13.3,29.353,250,852,250.089,compiled_collision_model,small ceramic mug
+salad_dressing,libero/libero/assets/stable_hope_objects/salad_dressing/salad_dressing.xml,5.3x14.6x3.6,21.785,150,689,150.095,compiled_collision_model,small filled dressing bottle
+tomato_sauce,libero/libero/assets/stable_hope_objects/tomato_sauce/tomato_sauce.xml,6.2x7.6x6.2,26.633,220,826,219.987,compiled_collision_model,small filled sauce can
+white_bowl,libero/libero/assets/stable_scanned_objects/white_bowl/white_bowl.xml,8.1x8.1x3.4,2.086,60,2877,60.009,compiled_collision_model,8 cm empty ceramic bowl
+white_storage_box,libero/libero/assets/turbosquid_objects/white_storage_box/white_storage_box.xml,14.1x11.7x14.0,76.862,150,195,149.880,compiled_collision_model,empty plastic storage box
+white_yellow_mug,libero/libero/assets/turbosquid_objects/white_yellow_mug/white_yellow_mug.xml,14.0x10.6x10.3,30.912,300,971,300.153,compiled_collision_model,small ceramic mug
+wine_bottle,libero/libero/assets/turbosquid_objects/wine_bottle/wine_bottle.xml,4.3x4.4x15.7,15.394,150,974,149.939,compiled_collision_model,small empty glass bottle
+wine_rack,libero/libero/assets/turbosquid_objects/wine_rack/wine_rack.xml,26.9x25.4x33.0,152.748,700,458,699.586,compiled_collision_model,small wooden wine rack
+wooden_shelf,libero/libero/assets/turbosquid_objects/wooden_shelf/wooden_shelf.xml,25.6x19.1x21.7,183.571,500,272,499.313,compiled_collision_model,small wooden shelf
+wooden_tray,libero/libero/assets/turbosquid_objects/wooden_tray/wooden_tray.xml,29.7x16.6x8.2,57.154,300,525,300.057,compiled_collision_model,small wooden serving tray
+wooden_two_layer_shelf,libero/libero/assets/turbosquid_objects/wooden_two_layer_shelf/wooden_two_layer_shelf.xml,35.2x19.1x21.0,206.332,800,388,800.567,compiled_collision_model,small two-tier wooden shelf
+yellow_book,libero/libero/assets/turbosquid_objects/yellow_book/yellow_book.xml,2.4x9.8x12.2,28.125,150,533,149.906,compiled_collision_model,small paperback book
