@@ -55,25 +55,6 @@ class TargetZone(SiteObject):
             site_quat=array_to_string(self.quat),
         )
 
-    def in_box(self, this_position, this_mat, other_position):
-        """
-        Checks whether the object is contained within this SiteObject.
-        Useful for when the CompositeObject has holes and the object should
-        be within one of the holes. Makes an approximation by treating the
-        object as a point, and the SiteObject as an axis-aligned grid.
-        Args:
-            this_position: 3D position of this SiteObject
-            other_position: 3D position of object to test for insertion
-        """
-
-        total_size = np.abs(this_mat @ self.size)
-
-        ub = this_position + total_size
-        lb = this_position - total_size
-
-        lb[2] -= 0.01
-        return np.all(other_position > lb) and np.all(other_position < ub)
-
     def on_top(self, this_position, this_mat, other_position):
         """
         Checks whether the object is contained within this SiteObject.

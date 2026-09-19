@@ -36,24 +36,18 @@ class SiteObject:
         """
         Checks whether the object is contained within this SiteObject.
         Useful for when the CompositeObject has holes and the object should
-        be within one of the holes. Makes an approximation by treating the
-        object as a point, and the SiteObject as an axis-aligned grid.
+        be within one of the holes. Approximates the object as a point and
+        checks it against the box in the site's local coordinate frame.
         Args:
             this_position: 3D position of this SiteObject
+            this_mat: site-to-world rotation matrix
             other_position: 3D position of object to test for insertion
         """
-
-        # (TODO) Yifeng: The transformation for size is a little bit
-        # hacky at the moment. Will dig deeper into it.
-        total_size = np.abs(this_mat @ self.size)
-
-        ub = this_position + total_size
-        lb = this_position - total_size
-
-        lb[2] -= 0.01
-        # print(np.all(other_position > lb), np.all(other_position < ub))
-        # print(lb, other_position, ub)
-        return np.all(other_position > lb) and np.all(other_position < ub)
+        local_position = this_mat.T @ (other_position - this_position)
+        size = np.asarray(self.size)
+        lower = -size.copy()
+        lower[2] -= 0.01
+        return np.all(local_position > lower) and np.all(local_position < size)
 
     def __str__(self):
         return (
