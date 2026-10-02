@@ -129,11 +129,16 @@ class GroupedTaskDataset(Dataset):
 
 class TruncatedSequenceDataset(Dataset):
     def __init__(self, sequence_dataset, buffer_size):
+        if buffer_size < 0:
+            raise ValueError("Replay buffer size must be nonnegative")
         self.sequence_dataset = sequence_dataset
-        self.buffer_size = buffer_size
+        # A memory budget is an upper bound, not a promise that a task has
+        # enough samples to fill it.
+        self.buffer_size = min(buffer_size, len(sequence_dataset))
 
     def __len__(self):
         return self.buffer_size
 
     def __getitem__(self, idx):
         return self.sequence_dataset.__getitem__(idx)
+
