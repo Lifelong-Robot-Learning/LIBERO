@@ -224,11 +224,11 @@ class TransformerDecoder(nn.Module):
     def forward(self, x, mask=None):
         for layer_idx, (att_norm, att, ff_norm, ff) in enumerate(self.layers):
             if mask is not None:
-                x = x + drop_path(att(att_norm(x), mask))
+                x = x + self.drop_path(att(att_norm(x), mask))
             elif self.mask is not None:
-                x = x + drop_path(att(att_norm(x), self.mask))
+                x = x + self.drop_path(att(att_norm(x), self.mask))
             else:  # no masking, just use full attention
-                x = x + drop_path(att(att_norm(x)))
+                x = x + self.drop_path(att(att_norm(x)))
 
             if not self.training:
                 self.attention_output[layer_idx] = att.att_weights
@@ -238,3 +238,4 @@ class TransformerDecoder(nn.Module):
     @property
     def device(self):
         return next(self.parameters()).device
+
