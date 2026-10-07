@@ -49,18 +49,22 @@ class Attention(nn.Module):
         if mask is not None:
             mask = mask.bool()
             if len(mask.shape) == 2:  # (B, N)
-                attn = attn.masked_fill(~mask[:, None, None, :], float("-inf"))
+                allowed = mask[:, None, None, :]
             elif len(mask.shape) == 3 and mask.shape[0] == 1:  # (1, N, N)
-                attn = attn.masked_fill(~mask[None, :, :, :], float("-inf"))
+                allowed = mask[None, :, :, :]
             elif (
                 len(mask.shape) == 3
             ):  # Consider the case where each batch has different causal mask, typically useful for MAE implementation
-                attn = attn.masked_fill(
-                    ~mask[:, None, :, :].repeat(1, self.num_heads, 1, 1), float("-inf")
-                )
+                allowed = mask[:, None, :, :]
             else:
                 raise Exception("mask shape is not correct for attention")
+            has_valid_keys = allowed.any(dim=-1, keepdim=True)
+            attn = attn.masked_fill(~allowed, float("-inf"))
+            # Avoid undefined softmax(-inf, ..., -inf), including its gradient.
+            attn = attn.masked_fill(~has_valid_keys, 0.0)
         attn = attn.softmax(dim=-1)
+        if mask is not None:
+            attn = attn.masked_fill(~has_valid_keys, 0.0)
         self.att_weights = attn
 
         # (..., num_heads, seq_len, head_output_size)
