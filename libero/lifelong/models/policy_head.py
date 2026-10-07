@@ -50,14 +50,15 @@ class GMMHead(nn.Module):
             layers = []
             for i in range(num_layers):
                 layers += [nn.Linear(sizes[i], sizes[i + 1]), nn.ReLU()]
-            layers += [nn.Linear(sizes[-2], sizes[-1])]
+            layers += [nn.Linear(hidden_size, hidden_size)]
             self.share = nn.Sequential(*layers)
         else:
             self.share = nn.Identity()
 
-        self.mean_layer = nn.Linear(hidden_size, output_size * num_modes)
-        self.logstd_layer = nn.Linear(hidden_size, output_size * num_modes)
-        self.logits_layer = nn.Linear(hidden_size, num_modes)
+        feature_size = hidden_size if num_layers > 0 else input_size
+        self.mean_layer = nn.Linear(feature_size, output_size * num_modes)
+        self.logstd_layer = nn.Linear(feature_size, output_size * num_modes)
+        self.logits_layer = nn.Linear(feature_size, num_modes)
 
         self.low_eval_noise = low_eval_noise
         self.loss_coef = loss_coef
