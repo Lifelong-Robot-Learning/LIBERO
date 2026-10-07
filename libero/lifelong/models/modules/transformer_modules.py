@@ -143,7 +143,7 @@ class SinusoidalPositionEncoding(nn.Module):
         pos_x = torch.arange(x.shape[1], device=x.device).type(self.inv_freq.type())
         sin_inp_x = torch.einsum("i,j->ij", pos_x, self.inv_freq)
         emb_x = torch.cat((sin_inp_x.sin(), sin_inp_x.cos()), dim=-1)
-        return emb_x * self.factor
+        return emb_x[:, :self.input_size] * self.factor
 
     def output_shape(self, input_shape):
         return input_shape
